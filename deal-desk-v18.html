@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradial Pricing Model — Enterprise Marketing Artifact Volume Research</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f2f9; color: #2d3436; line-height: 1.6; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 4px; background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { color: #636e72; font-size: 0.95rem; margin-bottom: 28px; }
+  .controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+  .controls label { font-weight: 600; font-size: 0.85rem; color: #636e72; }
+  .controls select, .controls button { padding: 8px 16px; border: 1px solid #e0d4f5; border-radius: 8px; font-size: 0.9rem; background: #fff; cursor: pointer; }
+  .controls button { background: linear-gradient(135deg, #7c3aed, #db2777); color: #fff; border: none; font-weight: 600; }
+  .controls button:hover { opacity: 0.9; }
+  .controls button.active { background: linear-gradient(135deg, #059669, #10b981); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 32px; }
+  .card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 12px rgba(124,58,237,0.08); border: 1px solid #ede9fe; }
+  .card h3 { font-size: 1rem; color: #7c3aed; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card h3 .icon { font-size: 1.3rem; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; padding: 8px 10px; background: #f8f5ff; color: #7c3aed; font-weight: 600; border-bottom: 2px solid #ede9fe; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #f3f0ff; }
+  tr:hover td { background: #faf8ff; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .tier-starter { color: #059669; }
+  .tier-pro { color: #2563eb; }
+  .tier-largest { color: #7c3aed; }
+
+  .big-table-wrap { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 12px rgba(124,58,237,0.08); border: 1px solid #ede9fe; margin-bottom: 32px; overflow-x: auto; }
+  .big-table-wrap h2 { font-size: 1.15rem; margin-bottom: 16px; color: #1a1a2e; }
+  .big-table { min-width: 1100px; }
+  .big-table th { position: sticky; top: 0; z-index: 2; }
+  .vertical-label { font-weight: 700; background: #f3f0ff !important; }
+  .artifact-group { border-left: 3px solid #7c3aed; }
+
+  .methodology { background: #fff; border-radius: 14px; padding: 24px; box-shadow: 0 2px 12px rgba(124,58,237,0.08); border: 1px solid #ede9fe; margin-bottom: 32px; }
+  .methodology h2 { font-size: 1.15rem; margin-bottom: 12px; color: #1a1a2e; }
+  .methodology p, .methodology li { font-size: 0.88rem; color: #444; margin-bottom: 8px; }
+  .methodology ul { padding-left: 20px; margin-bottom: 12px; }
+  .methodology .source-tag { display: inline-block; background: #f3f0ff; color: #7c3aed; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 4px; }
+
+  .summary-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .summary-stat { background: #fff; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 12px rgba(124,58,237,0.08); border: 1px solid #ede9fe; }
+  .summary-stat .val { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #7c3aed, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .summary-stat .label { font-size: 0.78rem; color: #636e72; margin-top: 4px; }
+
+  .highlight { background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%); color: #fff; border-radius: 14px; padding: 20px; margin-bottom: 28px; box-shadow: 0 4px 20px rgba(124,58,237,0.25); }
+  .highlight h2 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
+  .highlight p { font-size: 0.9rem; opacity: 0.92; }
+
+  .tab-bar { display: flex; gap: 0; margin-bottom: 20px; border-radius: 12px; overflow: hidden; border: 2px solid #7c3aed; box-shadow: 0 2px 12px rgba(124,58,237,0.15); }
+  .tab-group { display: flex; flex: 1; border-right: 1px solid rgba(124,58,237,0.3); }
+  .tab-group:last-child { border-right: none; }
+  .tab-bar button { flex: 1; padding: 12px 6px; border: none; background: #faf8ff; border-radius: 0; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: #7c3aed; }
+  .tab-bar button:hover { background: #ede9fe; color: #5b21b6; }
+  .tab-bar button.active { background: linear-gradient(135deg, #7c3aed, #db2777); color: #fff; }
+
+  .hidden { display: none; }
+  @media(max-width: 768px) { .container { padding: 12px; } h1 { font-size: 1.3rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+  <div>
+    <h1 style="margin-bottom:2px">Gradial Deal Desk</h1>
+    <p style="font-size:0.85rem;color:#9ca3af;margin-bottom:0">Last updated March 22, 2026</p>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" width="160" height="47" viewBox="0 0 1300 382"><defs><style>.gl{fill:#131327;}</style></defs><path class="gl" d="M98.38,158.76h50.61c32.18,0,58.26-26.09,58.26-58.26h0s-105.62,0-105.62,0C40.65,100.5.94,144.12.94,197.94s43.63,97.44,97.44,97.44,97.44-43.63,97.44-97.44c0-5.82-.74-11.65-2.11-17.05h-60.05c2.49,5.15,3.89,10.94,3.89,17.05,0,21.64-17.54,39.18-39.18,39.18s-39.18-17.54-39.18-39.18,17.54-39.18,39.18-39.18Z"/><path class="gl" d="M318.22,109.18c-9.16,5.1-16.7,11.73-22.65,19.87v-.37c0-15.57-12.62-28.19-28.19-28.19h-29.9v217.52h60.92v-102.7c0-20.75,5.32-36.05,15.97-45.89,10.65-9.84,24.59-14.76,41.85-14.76,2.42,0,4.71.07,6.87.2,2.15.14,4.58.34,7.28.6v-58.22c-20.49,0-37.87,3.98-52.15,11.93Z"/><path class="gl" d="M787.93,18.01v105.24c-5.01-5.49-10.65-10.14-16.98-13.87-13.75-8.09-29.79-12.13-48.12-12.13-20.49,0-38.95,4.59-55.39,13.75-16.45,9.17-29.46,22.11-39.02,38.81-9.57,16.72-14.35,36.53-14.35,59.44s4.78,42.32,14.35,59.03c9.57,16.71,22.57,29.72,39.02,39.01,16.44,9.3,34.9,13.95,55.39,13.95,24.44,0,36.12-3.33,49.74-11.42,7.15-4.25,14.79-11.97,19.41-20.36h0c0,13.91,11.16,28.55,28.55,28.55h27.72V18.01h-60.32ZM781.45,241.4c-5.14,9.04-12,15.97-20.59,20.82-8.59,4.85-18.16,7.28-28.69,7.28s-20.51-2.43-29.1-7.28c-8.6-4.85-15.45-11.79-20.58-20.82-5.13-9.02-7.7-19.74-7.7-32.15s2.57-23.45,7.7-32.35c5.12-8.9,11.98-15.77,20.58-20.61,8.59-4.86,18.3-7.28,29.1-7.28s20.1,2.42,28.69,7.28c8.59,4.85,15.45,11.72,20.59,20.61,5.12,8.9,7.69,19.68,7.69,32.35s-2.57,23.12-7.69,32.15Z"/><path class="gl" d="M899.93,284.46V100.5h60.32v217.52h-26.77c-18.53,0-33.55-15.02-33.55-33.55Z"/><path class="gl" d="M1240.62,284.46V18.01h60.32v300h-26.77c-18.53,0-33.55-15.02-33.55-33.55Z"/><path class="gl" d="M556.03,114.52c-18.33-15.63-38.44-25.03-73.39-25.03s-68.17,10.47-77.9,15.15v54.05c10.52-5.38,46.49-17.42,70.31-17.42,19.19,0,27.93,4.02,35.83,11.26,8.21,7.55,12.33,18.06,12.33,31.54v.16h-50.13c-22.11,0-40.03,2.9-53.78,8.68-13.74,5.78-23.79,13.74-30.12,23.89-6.33,10.15-9.5,21.99-9.5,35.53s3.23,24.67,9.71,35.1c6.47,10.44,15.76,18.69,27.9,24.75,12.13,6.06,26.68,9.09,43.66,9.09,19.14,0,34.77-3.81,46.9-11.42,8.22-5.16,14.66-11.97,19.41-20.36h0c0,15.77,12.78,28.55,28.55,28.55h27.72v-130.32c0-33.16-9.16-57.54-27.49-73.18ZM506.13,267.68c-8.12,5.97-20.02,9.16-30.85,9.16-11.4,0-20.36-2.47-26.88-7.41-6.54-4.93-9.8-11.62-9.8-20.09,0-7.61,2.85-13.95,8.54-19.03,5.69-5.08,16.18-7.61,31.47-7.61h44.6c0,22.88-7.42,37.87-17.08,44.98Z"/><path class="gl" d="M1171.11,114.52c-18.33-15.63-38.44-25.03-73.39-25.03s-68.17,10.47-77.9,15.15v54.05c10.52-5.38,46.49-17.42,70.31-17.42,19.19,0,27.93,4.02,35.83,11.26,8.21,7.55,12.33,18.06,12.33,31.54v.16h-50.13c-22.11,0-40.03,2.9-53.78,8.68-13.74,5.78-23.79,13.74-30.12,23.89-6.33,10.15-9.5,21.99-9.5,35.53s3.23,24.67,9.71,35.1c6.47,10.44,15.76,18.69,27.9,24.75,12.13,6.06,26.68,9.09,43.66,9.09,19.14,0,34.77-3.81,46.9-11.42,8.22-5.16,14.66-11.97,19.41-20.36h0c0,15.77,12.78,28.55,28.55,28.55h27.72v-130.32c0-33.16-9.16-57.54-27.49-73.18ZM1121.21,267.68c-8.12,5.97-20.02,9.16-30.85,9.16-11.4,0-20.36-2.47-26.88-7.41-6.54-4.93-9.8-11.62-9.8-20.09,0-7.61,2.85-13.95,8.54-19.03,5.69-5.08,16.18-7.61,31.47-7.61h44.6c0,22.88-7.42,37.87-17.08,44.98Z"/><circle class="gl" cx="930.09" cy="36.93" r="36.34"/><path class="gl" d="M140.15,325.13h-68.5c-10.98,0-19.88-8.9-19.88-19.88v-21.72h0c-22.98,0-41.6,18.63-41.61,41.6h0s0,0,0,0,0,0,0,0h0s0,0,0,0c0,31.4,25.46,56.86,56.87,56.86h129.99c0-31.41-25.46-56.87-56.87-56.87Z"/></svg>
+</div>
+
+<div class="tab-bar" style="display:flex;gap:0;">
+  <div class="tab-group tab-group-definitions" style="flex:1;display:flex;">
+    <button class="active" style="flex:1;" onclick="showTab('definitions')">Term Definitions</button>
+  </div>
+  <div class="tab-group tab-group-definitions" style="flex:1;display:flex;">
+    <button style="flex:1;" onclick="showTab('usecases')">Use Cases</button>
+  </div>
+  <div class="tab-group tab-group-definitions" style="flex:1;display:flex;">
+    <button style="flex:1;" onclick="showTab('calculator')">Pricing Calculator</button>
+  </div>
+  <div class="tab-group tab-group-definitions" style="flex:1;display:flex;">
+    <button style="flex:1;" onclick="showTab('proposal')">Client Proposal</button>
+  </div>
+</div>
+
+<!-- ==================== TAB: TERM DEFINITIONS ==================== -->
+<div id="tab-definitions">
+
+<h2>Artifact Taxonomy</h2>
+
+<div class="card" style="margin-bottom:20px;border-left:4px solid #7c3aed;">
+  <h3 style="color:#7c3aed;margin-bottom:8px">Brand/Workspace</h3>
+  <p style="font-size:0.85rem;color:#555;line-height:1.8;margin:0;">A Workspace is a team space in Gradial — specific tasks and projects assigned to a specific product group or team. A Workspace includes its own Brand guidelines and QA checks. For example, an auto manufacturer with 5 brands would most likely have 5 Workspaces in Gradial, each with its own Brand guidelines and QA checks.</p>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px;">
+
+  <div class="card" style="border-top:4px solid #0984e3">
+    <h3 style="color:#0984e3;margin-bottom:12px">Email</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Email from Creative Brief</li>
+      <li>Email from Prompt</li>
+      <li>Email from Figma</li>
+      <li>Email from Ticket</li>
+      <li>Translated Email</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #059669">
+    <h3 style="color:#059669;margin-bottom:12px">Content Updates</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Content Updates on Web Pages and Email</li>
+      <li>Content Updates Initiated from Report</li>
+      <li>Incremental Edits Post Page Creation</li>
+      <li>Ticket Creation</li>
+      <li>Ticket Write-back</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #fdcb6e">
+    <h3 style="color:#e17055;margin-bottom:12px">Assets</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Asset Upload to DAM or other system and Asset Tagging</li>
+      <li>Asset Variants</li>
+      <li>Net New Asset Creation</li>
+      <li>Copy Change in Static Image</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #7c3aed">
+    <h3 style="color:#7c3aed;margin-bottom:12px">Pages</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Page from Creative Brief</li>
+      <li>Page from Prompt</li>
+      <li>Page from Figma</li>
+      <li>Page from Ticket</li>
+      <li>Translated Page</li>
+      <li>Migrated Page</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #e17055">
+    <h3 style="color:#e17055;margin-bottom:12px">Reports</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>QA Report and Accessibility Report</li>
+      <li>Site Scan Report</li>
+      <li>Side by Side Edit Comparison Report</li>
+      <li>Optimizer Buyer Agent Report</li>
+      <li>GEO Report</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #00cec9">
+    <h3 style="color:#00cec9;margin-bottom:12px">Paid Media and Social Media Posts</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Paid Media Generation</li>
+      <li>Posts from Prompt</li>
+      <li>Posts from Creative Brief</li>
+      <li>Posts from Figma</li>
+      <li>Posts from Ticket</li>
+    </ul>
+  </div>
+
+</div>
+
+<h2 style="margin-top:32px">Support Definitions</h2>
+<p style="font-size:0.85rem;color:#888;margin-bottom:20px;">Description of capabilities and coverage included in each support tier.</p>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px;">
+
+  <div class="card" style="border-top:4px solid #059669">
+    <h3 style="color:#059669;margin-bottom:12px">Basic Support</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Access to ticketing portal for issue submission and tracking</li>
+      <li>Business-hours coverage (Mon–Fri, 9am–5pm PST)</li>
+      <li>Access to self-service knowledge base and documentation</li>
+      <li>Standard release notes and product update communications</li>
+      <li>Best-effort response for Severity 1; queued handling for Severity 2/3</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #0984e3">
+    <h3 style="color:#0984e3;margin-bottom:12px">Professional Support</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Everything in Basic, plus accelerated SLA response times</li>
+      <li>Named support contact for consistent issue handling</li>
+      <li>Quarterly business reviews with usage analytics and optimization guidance</li>
+      <li>Priority ticket routing with escalation paths to engineering</li>
+      <li>Proactive monitoring alerts and early access to new feature previews</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #e17055">
+    <h3 style="color:#e17055;margin-bottom:12px">Enterprise Support</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Everything in Professional, plus 7-day coverage with fastest SLAs</li>
+      <li>Forward deployed engineering support with dedicated Slack/Teams channel</li>
+      <li>Weekly calls with forward deployed team; custom onboarding and training</li>
+      <li>Direct escalation to senior engineering; post-incident root cause analysis</li>
+      <li>Dedicated Customer Success Manager with monthly strategic reviews and roadmap input</li>
+    </ul>
+  </div>
+
+</div>
+
+<h2 style="margin-top:32px">Service Turnaround Times</h2>
+<p style="font-size:0.85rem;color:#888;margin-bottom:20px;">Response and resolution targets by tier and severity level.</p>
+
+<div class="card" style="margin-bottom:20px;border-left:4px solid #7c3aed">
+  <h3 style="color:#636e72;margin-bottom:10px;font-size:0.95rem">Severity Definitions</h3>
+  <table style="font-size:0.84rem;width:100%">
+    <tbody>
+      <tr><td style="font-weight:700;color:#e17055;white-space:nowrap;vertical-align:top;padding-right:12px;width:90px">Severity 1</td><td style="color:#555">Production outage or severe service degradation with no viable workaround; causes significant and immediate business impact.</td></tr>
+      <tr><td style="font-weight:700;color:#d68910;white-space:nowrap;vertical-align:top;padding-right:12px">Severity 2</td><td style="color:#555">Partial service outage or major degradation affecting core functionality; workaround may exist but impact is meaningful to operations or users.</td></tr>
+      <tr><td style="font-weight:700;color:#059669;white-space:nowrap;vertical-align:top;padding-right:12px">Severity 3</td><td style="color:#555">Non-critical issue with limited business impact; functionality largely intact and a reasonable workaround is available.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
+
+  <div class="card" style="border-top:4px solid #059669">
+    <h3 style="color:#059669;margin-bottom:12px">Starter</h3>
+    <table style="font-size:0.82rem;width:100%">
+      <tbody>
+        <tr><td style="font-weight:600;color:#555">Coverage</td><td>Mon–Fri (9am – 5pm PST)</td></tr>
+        <tr><td style="font-weight:600;color:#555">Support Channels</td><td>Ticketing Portal</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 1</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>1 Business Day</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>Best effort</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 2/3</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>4 Business Days</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>6 Business Days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="border-top:4px solid #0984e3">
+    <h3 style="color:#0984e3;margin-bottom:12px">Professional</h3>
+    <table style="font-size:0.82rem;width:100%">
+      <tbody>
+        <tr><td style="font-weight:600;color:#555">Coverage</td><td>Mon–Fri (9am – 5pm PST)</td></tr>
+        <tr><td style="font-weight:600;color:#555">Support Channels</td><td>Ticketing Portal</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 1</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>5 Business Hours</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>Best effort</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 2/3</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>3 Business Days</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>5 Business Days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="border-top:4px solid #7c3aed">
+    <h3 style="color:#7c3aed;margin-bottom:12px">Corporate</h3>
+    <table style="font-size:0.82rem;width:100%">
+      <tbody>
+        <tr><td style="font-weight:600;color:#555">Coverage</td><td>6 Days a Week (except Sunday)</td></tr>
+        <tr><td style="font-weight:600;color:#555">Support Channels</td><td>Ticketing Portal + Dedicated Slack/Teams</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 1</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>4 Business Hours</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>Best effort</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 2/3</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>2 Business Days</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>4 Business Days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="border-top:4px solid #e17055">
+    <h3 style="color:#e17055;margin-bottom:12px">Enterprise</h3>
+    <table style="font-size:0.82rem;width:100%">
+      <tbody>
+        <tr><td style="font-weight:600;color:#555">Coverage</td><td>7 Days a Week</td></tr>
+        <tr><td style="font-weight:600;color:#555">Support Channels</td><td>Ticketing Portal + Dedicated Slack/Teams</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 1</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>1 Business Hour</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>Best effort</td></tr>
+        <tr style="background:#f8f9fa"><td colspan="2" style="font-weight:700;font-size:0.75rem;color:#636e72;text-transform:uppercase;letter-spacing:0.5px;padding-top:10px">Severity 2/3</td></tr>
+        <tr><td style="font-weight:600;color:#555">Initial Response</td><td>1 Business Day</td></tr>
+        <tr><td style="font-weight:600;color:#555">Target Resolution</td><td>3 Business Days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</div>
+
+<!-- ==================== TAB: USE CASES ==================== -->
+<div id="tab-usecases" class="hidden">
+
+<h2>Use Cases</h2>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:20px;">
+
+  <div class="card" style="border-top:4px solid #0984e3">
+    <h3 style="color:#0984e3;margin-bottom:12px">Content Updates</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Automating text changes to existing AEM pages (headers, body copy, CTAs)</li>
+      <li>Performing image swaps or updates with proper metadata and alt text</li>
+      <li>Executing bulk updates across hundreds of pages or components at once</li>
+      <li>Managing localized content edits for different regions or languages</li>
+      <li>Inserting tracked changes or suggestions for human review</li>
+      <li>Performing accessibility (ADA) fixes and QA checks (e.g., color contrast, alt tags)</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #7c3aed">
+    <h3 style="color:#7c3aed;margin-bottom:12px">New Page Creation</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Generating new AEM pages from:
+        <ul style="margin:4px 0 4px 16px;padding-left:0;list-style:circle">
+          <li>Natural language briefs</li>
+          <li>Word documents or slide decks</li>
+          <li>Existing campaign materials or Figma files</li>
+        </ul>
+      </li>
+      <li>Automatically selecting and arranging appropriate components</li>
+      <li>Populating pages with draft content (titles, images, body text)</li>
+      <li>Tagging and classifying new pages for proper DAM integration and search</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #059669">
+    <h3 style="color:#059669;margin-bottom:12px">CMS and DAM Migration</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Migrating pages, components, and content structures from legacy CMS platforms to modern systems (e.g., AEM, Sitecore, Contentful)</li>
+      <li>Transferring and re-mapping digital assets from source DAM to target DAM with preserved metadata, taxonomy, and folder structure</li>
+      <li>Automatically mapping deprecated or custom components to new standardized templates during migration</li>
+      <li>Running pre- and post-migration validation to ensure content integrity, link accuracy, and zero data loss</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #fdcb6e">
+    <h3 style="color:#e17055;margin-bottom:12px">Asset Operations</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Search for any asset you want through multiple DAMs and recommend assets to insert into pieces of content</li>
+      <li>Upload and ingest new assets into the DAM with automatic tagging (title, description, type, metadata, aria labels, SEO properties, and custom labels)</li>
+      <li>De-duplicate assets to prevent redundant entries and ensure a clean, organized DAM</li>
+      <li>Update and maintain existing assets — refreshing metadata, correcting taxonomy, and publishing to Dynamic Media</li>
+      <li>Provide direct DAM links for all assets tagged or processed through the Gradial platform</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #e17055">
+    <h3 style="color:#e17055;margin-bottom:12px">Content QA and Compliance</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Performing pre-publish checks: missing metadata, broken links, incorrect component usage</li>
+      <li>Highlighting non-compliant content (e.g., outdated disclaimers, brand guideline violations)</li>
+      <li>Suggesting or applying fixes based on configurable QA rules</li>
+      <li>Flagging long-running tasks or edit conflicts for human resolution</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #00cec9">
+    <h3 style="color:#00cec9;margin-bottom:12px">Workflow and Ops Automation</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Routing tasks to appropriate teams based on content type and region</li>
+      <li>Tracking ticket lifecycle across content updates and new page builds</li>
+      <li>Visualizing key KPIs: number of edits, agent-assisted tickets, average runtime</li>
+      <li>Integrating with Wrike, JIRA and other ticketing tools to sync content workflows</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #a29bfe">
+    <h3 style="color:#7c3aed;margin-bottom:12px">Business Insights and Reporting</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Measuring time saved by using Gradial vs traditional editing</li>
+      <li>Analyzing most commonly edited component types</li>
+      <li>Identifying content areas with high error rates or rework</li>
+      <li>Highlighting opportunities for further automation or training</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #2ecc71">
+    <h3 style="color:#27ae60;margin-bottom:12px">Generative Engine Optimization (GEO)</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Auditing existing pages for AI-search readiness (structured data, schema markup, clear entity definitions)</li>
+      <li>Optimizing content to surface in AI-generated answers from ChatGPT, Perplexity, Google AI Overviews, and other LLM-powered search engines</li>
+      <li>Generating authoritative, citation-worthy content blocks that LLMs are more likely to reference</li>
+      <li>Adding and maintaining structured FAQ, How-To, and Product schema across pages at scale</li>
+      <li>Monitoring brand visibility and citation frequency across generative search platforms</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #3498db">
+    <h3 style="color:#2980b9;margin-bottom:12px">Email Creation</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Generating production-ready HTML emails from natural language briefs, creative briefs, or Figma designs</li>
+      <li>Auto-populating email templates with brand-compliant copy, images, and CTAs</li>
+      <li>Creating A/B test variants with different subject lines, layouts, or content blocks</li>
+      <li>Performing pre-send QA: broken links, missing alt text, spam-trigger language, and brand compliance checks</li>
+      <li>Localizing email content for multiple regions with proper language and regulatory adjustments</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #e74c3c">
+    <h3 style="color:#c0392b;margin-bottom:12px">Paid Media Asset Creation</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>Generating ad creatives across LinkedIn, Meta (Facebook/Instagram), and Google (Search, Display, YouTube) from a single brief</li>
+      <li>Producing platform-specific size and format variants (1080×1080, 9:16, 16:9, responsive display) in bulk</li>
+      <li>Creating copy variants with different headlines, descriptions, and CTAs for multivariate testing</li>
+      <li>Applying brand guidelines automatically — fonts, colors, logos, and disclaimer text</li>
+      <li>Tagging and organizing all generated assets in the DAM with campaign metadata for traceability</li>
+      <li>Performing compliance checks for platform-specific ad policies (character limits, image text ratios, restricted content)</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-top:4px solid #8e44ad">
+    <h3 style="color:#8e44ad;margin-bottom:12px">Optimizer Buyer Agent</h3>
+    <ul style="font-size:0.85rem;color:#555;margin:0;padding-left:20px;line-height:2">
+      <li>AI-powered agent that evaluates your digital content from a buyer's perspective across web, email, and paid media</li>
+      <li>Simulates real buyer journeys to identify friction points, messaging gaps, and conversion obstacles</li>
+      <li>Generates actionable optimization recommendations ranked by expected business impact</li>
+      <li>Benchmarks content effectiveness against industry best practices and competitor positioning</li>
+      <li>Produces detailed audit reports with before/after recommendations for each content asset</li>
+      <li>Continuously monitors content performance and surfaces re-optimization opportunities</li>
+    </ul>
+  </div>
+
+</div>
+
+</div>
+
+<!-- ==================== TAB: PRICING CALCULATOR ==================== -->
+<div id="tab-calculator" class="hidden">
+
+<h2 style="margin-bottom:4px;">Credits & Pricing Calculator</h2>
+<p style="font-size:0.85rem;color:#888;margin-bottom:24px;">Enter the number of requests you expect for each type. The calculator shows the estimated range of total credits and cost, then computes pricing based on your license, support, and credit fee structure.</p>
+
+<div class="card" style="border:2px solid #7c3aed;padding:24px;margin-bottom:24px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <h3 style="color:#7c3aed;margin:0;">Credits Estimator</h3>
+    <button onclick="clearAll()" style="padding:8px 20px;border:1px solid #ddd;border-radius:8px;background:#faf8ff;color:#7c3aed;font-size:0.85rem;font-weight:600;cursor:pointer;">Clear All</button>
+  </div>
+
+  <div id="calc-grid" style="display:grid;grid-template-columns:2.5fr 0.8fr 1fr 1fr 1fr 1fr;gap:0;border:1px solid #ede9fe;border-radius:10px;overflow:hidden;">
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Request Type</div>
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;text-align:center;">Volume</div>
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;text-align:right;">Low Est.</div>
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;text-align:right;">Est.</div>
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;text-align:right;">High Est.</div>
+    <div style="background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;padding:10px 14px;font-size:0.72rem;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;text-align:right;">Est. Cost</div>
+  </div>
+
+  <!-- Credit totals -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;">
+    <div class="summary-stat" style="border-top:3px solid #059669;">
+      <div class="val" style="background:none;-webkit-text-fill-color:#059669;color:#059669;" id="total-low">0</div>
+      <div class="label">Low Estimate (P10–P33)</div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #e67e22;">
+      <div class="val" style="background:none;-webkit-text-fill-color:#e67e22;color:#e67e22;" id="total-med">0</div>
+      <div class="label">Estimated Credits</div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #e74c3c;">
+      <div class="val" style="background:none;-webkit-text-fill-color:#e74c3c;color:#e74c3c;" id="total-high">0</div>
+      <div class="label">High Estimate (P67–P95)</div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #2563eb;">
+      <div class="val" style="background:none;-webkit-text-fill-color:#2563eb;color:#2563eb;" id="total-cost">$0</div>
+      <div class="label">Est. LLM Cost</div>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing Section -->
+<div class="card" style="border:2px solid #db2777;padding:24px;">
+  <h3 style="color:#db2777;margin-bottom:16px;">Pricing</h3>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:12px;">
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Base License Fee</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;transition:border-color 0.2s;" id="wrap-license"><span style="padding:8px 4px 8px 12px;font-size:15px;font-weight:600;color:#999;">$</span><input type="number" id="fee-license" value="200000" min="150000" oninput="enforceMins(); recalcAll()" style="border:none;background:transparent;padding:8px 12px 8px 2px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;"></div>
+      <div style="font-size:0.72rem;color:#999;font-style:italic;margin-top:4px;">min $150,000 (incl. integrations)</div>
+    </div>
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Support Tier</label>
+      <div style="background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;" id="wrap-support"><select id="fee-support" onchange="recalcAll()" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%237c3aed%22 stroke-width=%222%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;">
+        <option value="50000">Basic — $50,000/yr</option>
+        <option value="100000">Professional — $100,000/yr</option>
+        <option value="150000" selected>Enterprise — $150,000/yr</option>
+      </select></div>
+      <div style="font-size:0.72rem;color:#999;font-style:italic;margin-top:4px;">Matches support tiers in Term Definitions</div>
+    </div>
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Price per Credit</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;"><span style="padding:8px 4px 8px 12px;font-size:15px;font-weight:600;color:#999;">$</span><input type="number" id="fee-credit" value="4" min="0" step="0.50" oninput="recalcAll()" style="border:none;background:transparent;padding:8px 12px 8px 2px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;"></div>
+    </div>
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Credits</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;transition:border-color 0.2s;" id="wrap-credits-override"><input type="number" id="fee-credits-override" value="" min="0" step="100" oninput="recalcAll()" placeholder="auto" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;text-align:center;"></div>
+      <div style="font-size:0.72rem;color:#999;font-style:italic;margin-top:4px;" id="credits-override-hint">Auto-calculated from volumes</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:12px;">
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Native Integrations</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;"><input type="number" id="int-native" value="3" min="0" step="1" oninput="buildIntegrationNames(); enforceMins(); recalcAll()" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;text-align:center;"></div>
+      <div style="font-size:0.72rem;color:#999;font-style:italic;margin-top:4px;">3 included; +$25K each after</div>
+    </div>
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Non-Native Integrations</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;"><input type="number" id="int-nonnative" value="0" min="0" step="1" oninput="buildIntegrationNames(); enforceMins(); recalcAll()" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;text-align:center;"></div>
+      <div style="font-size:0.72rem;color:#999;font-style:italic;margin-top:4px;">+$50K each</div>
+    </div>
+    <div>
+      <label style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Contract Term</label>
+      <div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;"><input type="number" id="fee-years" value="1" min="1" max="5" step="1" oninput="buildYearDiscounts(); recalcAll()" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;text-align:center;"><span style="padding:8px 12px 8px 2px;font-size:0.85rem;color:#999;font-weight:600;">years</span></div>
+    </div>
+  </div>
+  <div id="integration-names" style="margin-bottom:20px;"></div>
+
+  <div id="license-surcharge" style="display:none;margin:-12px 0 16px 0;padding:8px 12px;background:#fff8e1;border-radius:8px;font-size:0.82rem;color:#e65100;"></div>
+
+  <!-- Volume Tiers -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Volume Tiers & Pricing</div>
+    <table id="tier-table" style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+      <tr>
+        <th style="text-align:left;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Tier</th>
+        <th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Credit Volume</th>
+        <th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Price / Credit</th>
+        <th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Credit Discount</th>
+        <th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Overage Rate</th>
+      </tr>
+    </table>
+    <div style="margin-top:6px;font-size:0.78rem;color:#999;" id="tier-match"></div>
+  </div>
+
+  <!-- Per-year discount inputs -->
+  <div id="year-discounts" style="margin-bottom:20px;"></div>
+
+  <!-- Year-by-year breakdown -->
+  <div id="year-breakdown" style="margin-top:20px;"></div>
+
+  <!-- Summary Cards -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px;">
+    <div class="summary-stat" style="border-top:3px solid #059669;">
+      <div class="val" style="font-size:1.4rem;background:none;-webkit-text-fill-color:#059669;color:#059669;" id="pricing-total">$350,000</div>
+      <div class="label">Total Contract Value</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;" id="pricing-total-detail"></div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #7c3aed;">
+      <div class="val" style="font-size:1.4rem;background:none;-webkit-text-fill-color:#7c3aed;color:#7c3aed;" id="pricing-credits-vol">0</div>
+      <div class="label">Credits Volume</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;" id="pricing-credits-vol-detail">credits/year</div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #e67e22;">
+      <div class="val" style="font-size:1.4rem;background:none;-webkit-text-fill-color:#e67e22;color:#e67e22;" id="pricing-discount-total">$0</div>
+      <div class="label">Total Discount</div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #059669;" id="margin-card">
+      <div class="val" style="font-size:1.4rem;background:none;-webkit-text-fill-color:#059669;color:#059669;" id="pricing-margin">&mdash;</div>
+      <div class="label">Gross Margin</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;" id="pricing-margin-detail"></div>
+    </div>
+    <div class="summary-stat" style="border-top:3px solid #2563eb;">
+      <div class="val" style="font-size:1.4rem;background:none;-webkit-text-fill-color:#2563eb;color:#2563eb;" id="pricing-cogs">$0</div>
+      <div class="label">Total LLM COGS</div>
+      <div style="font-size:0.72rem;color:#999;margin-top:2px;" id="pricing-cogs-detail"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;border:2px solid #7c3aed;">
+  <h3 style="color:#636e72">Native Integrations</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:10px;">
+    <div>
+      <div style="font-size:0.78rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;border-bottom:2px solid #0984e3;padding-bottom:4px">CMS</div>
+      <ul style="font-size:0.84rem;color:#555;margin:0;padding-left:18px;line-height:1.9">
+        <li>Adobe Experience Manager</li>
+        <li>Sitecore</li>
+        <li>Salesforce Marketing Cloud</li>
+        <li>Marketo</li>
+        <li>Pardot</li>
+        <li>Braze</li>
+        <li>Contentful</li>
+        <li>Contentstack</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:0.78rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;border-bottom:2px solid #7c3aed;padding-bottom:4px">Ticketing / Workflow</div>
+      <ul style="font-size:0.84rem;color:#555;margin:0;padding-left:18px;line-height:1.9">
+        <li>JIRA</li>
+        <li>Workfront</li>
+        <li>Wrike</li>
+        <li>Azure DevOps</li>
+        <li>ServiceNow</li>
+        <li>Aprimo</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-size:0.78rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;border-bottom:2px solid #e17055;padding-bottom:4px">DAM</div>
+      <ul style="font-size:0.84rem;color:#555;margin:0;padding-left:18px;line-height:1.9">
+        <li>Adobe Experience Manager</li>
+        <li>Sitecore</li>
+        <li>Salesforce Marketing Cloud</li>
+        <li>Bynder</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ==================== TAB: CLIENT PROPOSAL ==================== -->
+<div id="tab-proposal" class="hidden">
+
+<h2>Client Proposal Generator</h2>
+<p style="font-size:0.85rem;color:#888;margin-bottom:24px;">Configure pricing in the <strong>Pricing Calculator</strong> tab first, then generate a client-ready proposal below.</p>
+
+<div class="card" style="border:2px solid #7c3aed;margin-bottom:24px;">
+  <h3 style="color:#7c3aed;margin-bottom:16px;">Proposal Details</h3>
+  <div style="display:grid;gap:14px;max-width:500px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <label style="font-size:0.85rem;font-weight:600;color:#555;">Client Name</label>
+      <input type="text" id="prop-client" value="" placeholder="e.g. Acme Corporation" style="width:260px;padding:8px 12px;border:2px solid #ddd;border-radius:8px;font-size:0.9rem;">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <label style="font-size:0.85rem;font-weight:600;color:#555;">Prepared By</label>
+      <input type="text" id="prop-preparedby" value="" placeholder="e.g. Anup Singh" style="width:260px;padding:8px 12px;border:2px solid #ddd;border-radius:8px;font-size:0.9rem;">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <label style="font-size:0.85rem;font-weight:600;color:#555;">Proposal Date</label>
+      <input type="date" id="prop-date" style="width:260px;padding:8px 12px;border:2px solid #ddd;border-radius:8px;font-size:0.9rem;">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <label style="font-size:0.85rem;font-weight:600;color:#555;">Valid Until</label>
+      <input type="date" id="prop-valid" style="width:260px;padding:8px 12px;border:2px solid #ddd;border-radius:8px;font-size:0.9rem;">
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <label style="font-size:0.85rem;font-weight:600;color:#555;">Pricing Source</label>
+      <select id="prop-pricing-source" style="width:260px;padding:8px 12px;border:2px solid #7c3aed;border-radius:8px;font-size:0.9rem;font-weight:600;color:#7c3aed;background:#f3f0ff;cursor:pointer;">
+        <option value="credits">Credits Calculator</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <label style="font-size:0.82rem;font-weight:700;color:#059669;display:block;margin-bottom:8px;">Use Cases Desired</label>
+      <div id="uc-desired" style="display:grid;gap:4px;">
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Content Updates" style="margin-right:6px;">Content Updates</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="New Page Creation" style="margin-right:6px;">New Page Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="CMS and DAM Migration" style="margin-right:6px;">CMS and DAM Migration</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Asset Operations" style="margin-right:6px;">Asset Operations</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Content QA and Compliance" style="margin-right:6px;">Content QA and Compliance</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Workflow and Ops Automation" style="margin-right:6px;">Workflow and Ops Automation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Business Insights and Reporting" style="margin-right:6px;">Business Insights and Reporting</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Generative Engine Optimization (GEO)" style="margin-right:6px;">GEO</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Email Creation" style="margin-right:6px;">Email Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Paid Media Asset Creation" style="margin-right:6px;">Paid Media Asset Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Optimizer Buyer Agent" style="margin-right:6px;">Optimizer Buyer Agent</label>
+        <div style="margin-top:6px;"><input type="text" id="uc-desired-custom" placeholder="Other (type custom use case)" style="width:100%;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.8rem;color:#555;"></div>
+      </div>
+    </div>
+    <div>
+      <label style="font-size:0.82rem;font-weight:700;color:#7c3aed;display:block;margin-bottom:8px;">Additionally Interested In</label>
+      <div id="uc-interested" style="display:grid;gap:4px;">
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Content Updates" style="margin-right:6px;">Content Updates</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="New Page Creation" style="margin-right:6px;">New Page Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="CMS and DAM Migration" style="margin-right:6px;">CMS and DAM Migration</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Asset Operations" style="margin-right:6px;">Asset Operations</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Content QA and Compliance" style="margin-right:6px;">Content QA and Compliance</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Workflow and Ops Automation" style="margin-right:6px;">Workflow and Ops Automation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Business Insights and Reporting" style="margin-right:6px;">Business Insights and Reporting</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Generative Engine Optimization (GEO)" style="margin-right:6px;">GEO</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Email Creation" style="margin-right:6px;">Email Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Paid Media Asset Creation" style="margin-right:6px;">Paid Media Asset Creation</label>
+        <label style="font-size:0.8rem;color:#555;cursor:pointer;"><input type="checkbox" value="Optimizer Buyer Agent" style="margin-right:6px;">Optimizer Buyer Agent</label>
+        <div style="margin-top:6px;"><input type="text" id="uc-interested-custom" placeholder="Other (type custom use case)" style="width:100%;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.8rem;color:#555;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;">
+    <button onclick="generateProposal()" style="padding:12px 32px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.95rem;cursor:pointer;">Generate Proposal</button>
+    <button onclick="downloadProposalHTML()" id="btn-print-proposal" style="padding:12px 32px;background:#fff;color:#7c3aed;border:2px solid #7c3aed;border-radius:8px;font-weight:700;font-size:0.95rem;cursor:pointer;margin-left:10px;display:none;">Download Proposal</button>
+    <button onclick="resetProposal()" id="btn-reset-proposal" style="padding:12px 32px;background:#fff;color:#e17055;border:2px solid #e17055;border-radius:8px;font-weight:700;font-size:0.95rem;cursor:pointer;margin-left:10px;display:none;">Reset</button>
+  </div>
+</div>
+
+<div id="proposal-output"></div>
+
+</div>
+
+<div id="methodology-inline" style="display:none">
+<div class="methodology">
+  <h2>Methodology & Key Assumptions</h2>
+
+  <p><strong>Scope:</strong> Estimates cover $1B+ revenue enterprises. "Artifacts" are <em>unique creative units produced</em> — a new web page, a new email campaign, a new digital ad creative, or a meaningful content update. We are NOT counting total email sends (which could be millions), ad impressions, or page views. Paid media is scoped to <strong>digital channels only</strong> (LinkedIn, Meta/Facebook/Instagram, Google Search/Display/YouTube).</p>
+
+  <p><strong>Artifact Definitions:</strong></p>
+  <ul>
+    <li><strong>Web Pages:</strong> New landing pages, blog posts, product/service pages, campaign microsites, resource pages. Excludes auto-generated (e.g., pagination) or trivial metadata-only pages.</li>
+    <li><strong>Email Campaigns:</strong> Individual email campaigns created, configured, and sent — including the design/build work and the send configuration. Each campaign has specific content, design, audience segmentation, timing, and personalization. Includes A/B test variants as separate campaigns. Examples: a weekly newsletter, a product launch blast, a cart abandonment trigger, a nurture drip email, a seasonal promo, and their A/B variants.</li>
+    <li><strong>Digital Paid Media:</strong> Individual ad creatives for <strong>LinkedIn</strong> (Sponsored Content, InMail, Display), <strong>Meta</strong> (Facebook/Instagram feed, Stories, Reels, Shopping), and <strong>Google</strong> (Search, Display Network, YouTube, Performance Max). Includes size/format variants (e.g., 1080×1080, 9:16 video, responsive display). A single campaign concept with 4 placements × 3 copy variants × 2 CTAs = 24 assets. Excludes TV, radio, print, OOH, and programmatic non-Google display.</li>
+    <li><strong>Content Updates:</strong> Meaningful refreshes to existing pages — copy rewrites, image swaps, CTA changes, compliance updates, pricing/rate changes, seasonal refreshes. Excludes trivial typo fixes.</li>
+  </ul>
+
+  <p><strong>Tier Definitions:</strong></p>
+  <ul>
+    <li><span class="tier-starter" style="font-weight:700">Starter (~P25):</span> Conservative marketing org. Smaller team relative to company size, fewer product lines, primarily domestic market, less aggressive digital strategy.</li>
+    <li><span class="tier-pro" style="font-weight:700">Professional (~P50-P75):</span> Mature marketing org. Dedicated content team, multi-channel campaigns, likely multi-region, active SEO & paid media programs.</li>
+    <li><span class="tier-largest" style="font-weight:700">Largest (~P90+):</span> Best-in-class or highest-volume. Large marketing teams, global/multi-brand, aggressive growth targets, heavy personalization, many product lines.</li>
+  </ul>
+
+  <h2 style="margin-top:20px;">Source Data & Derivation Logic</h2>
+
+  <p><strong>Web Pages:</strong></p>
+  <ul>
+    <li><span class="source-tag">HubSpot</span> Companies publishing 16+ blog posts/month see 3.5x more traffic. Enterprise content teams target 15-20 quality pieces/week at the high end.</li>
+    <li><span class="source-tag">First Page Sage</span> ~54% of Fortune 500 companies maintain active blogs; IBM manages 27 separate blogs.</li>
+    <li><span class="source-tag">Enterprise SEO</span> Enterprise sites range from 10,000 to 5M+ pages; high-performing teams produce "hundreds of pages monthly across regions."</li>
+    <li><strong>Derivation:</strong> Starter = ~10-15 pages/month; Professional = ~30-80/month; Largest = ~100-500+/month depending on vertical. Commerce/Retail dramatically higher due to product pages.</li>
+  </ul>
+
+  <p><strong>Email Campaigns:</strong></p>
+  <ul>
+    <li><span class="source-tag">B2B Benchmark</span> Average B2B company sends 1 campaign every 25 days (~15/year); aggressive B2B sends 3-5/week (~200/year). $1B+ enterprises with dedicated email teams operate at the aggressive end.</li>
+    <li><span class="source-tag">B2C Benchmark</span> Large retailers send daily or multiple-times-weekly; includes seasonal, promotional, cart abandonment, lifecycle sequences.</li>
+    <li><span class="source-tag">Mailchimp/Moosend</span> Industry benchmarks show healthcare/financial at lower frequency due to compliance; retail/ecommerce at highest frequency.</li>
+    <li><span class="source-tag">A/B Testing</span> Best-practice enterprise teams A/B test subject lines, content, and design on most campaigns, effectively doubling the number of distinct email artifacts produced.</li>
+    <li><strong>Derivation:</strong> Each campaign = a distinct email artifact (design + content + configuration). Includes A/B variants as separate campaigns. A weekly newsletter with an A/B variant = 104 campaigns/year. Add promotional, lifecycle, event, seasonal campaigns and their variants.</li>
+  </ul>
+
+  <p><strong>Digital Paid Media (LinkedIn, Meta, Google only):</strong></p>
+  <ul>
+    <li><span class="source-tag">AdManage</span> High-spending apps produce ~2,365 variants/quarter (~9,400/year); gaming apps ~2,743/quarter (~11,000/year) — primarily across Meta and Google.</li>
+    <li><span class="source-tag">Meta/Advantage+</span> Meta's algorithm rewards higher creative volume; brands that supply the most variety get better delivery and lower CPAs.</li>
+    <li><span class="source-tag">Google PMax</span> Performance Max campaigns benefit from diverse asset groups — Google recommends 15+ images, 5+ videos, and multiple headlines/descriptions per asset group.</li>
+    <li><span class="source-tag">LinkedIn</span> B2B-focused verticals (tech, financial, industrials) lean heavily on LinkedIn Sponsored Content; typical enterprise runs 50-200+ LinkedIn creatives/year.</li>
+    <li><span class="source-tag">Industry Practice</span> 3-4 variants per campaign concept; refresh every 2-4 weeks on Meta/Google; batch production monthly saves 40% vs. reactive.</li>
+    <li><strong>Derivation:</strong> Campaigns × concepts × variants × placements × refresh cycles. Scoped to LinkedIn + Meta + Google only. Excludes TV, radio, print, OOH, programmatic non-Google display, and trade publication ads.</li>
+  </ul>
+
+  <p><strong>Content Updates:</strong></p>
+  <ul>
+    <li><span class="source-tag">Industry Data</span> Top-ranking sites update content every ~1.36 years on average; best practices call for quarterly refreshes of high-value pages.</li>
+    <li><span class="source-tag">Financial/Healthcare</span> Rate changes, regulatory updates, and compliance refreshes drive high update volumes in regulated industries.</li>
+    <li><strong>Derivation:</strong> Estimated as a multiplier on existing page count: 15-40% of active pages refreshed per year, plus regulatory/seasonal forced updates.</li>
+  </ul>
+
+  <h2 style="margin-top:20px;">Key Sources</h2>
+  <ul>
+    <li><a href="https://contentmarketinginstitute.com/enterprise-research/enterprise-content-marketing-research-findings" target="_blank">CMI Enterprise Content Marketing Benchmarks 2025</a></li>
+    <li><a href="https://www.hubspot.com/state-of-marketing" target="_blank">HubSpot 2026 State of Marketing Report</a></li>
+    <li><a href="https://www.salesforce.com/marketing/resources/state-of-marketing-report/" target="_blank">Salesforce 10th Edition State of Marketing</a></li>
+    <li><a href="https://admanage.ai/blog/how-many-ad-creatives-to-test" target="_blank">AdManage — Creative Volume Benchmarks</a></li>
+    <li><a href="https://spacebarcollective.com/content-velocity/" target="_blank">Spacebar Collective — Content Velocity Explained</a></li>
+    <li><a href="https://motionapp.com/blog/ad-fatigue" target="_blank">Motion — Ad Fatigue & Creative Refresh</a></li>
+    <li><a href="https://firstpagesage.com/seo-blog/corporate-blog-guidelines-best-practices-from-the-fortune-500-fc/" target="_blank">First Page Sage — Fortune 500 Blog Practices</a></li>
+    <li><a href="https://marketingltb.com/blog/statistics/healthcare-marketing-statistics/" target="_blank">Healthcare Marketing Statistics 2025</a></li>
+    <li><a href="https://designmodo.com/email-marketing-benchmarks-by-industry/" target="_blank">Designmodo — Email Benchmarks by Industry</a></li>
+    <li><a href="https://www.adsmurai.com/en/articles/creative-scalability-in-paid-social-advertising" target="_blank">Adsmurai — Creative Scalability in Paid Social</a></li>
+  </ul>
+
+  <h2 style="margin-top:20px;">Important Caveats</h2>
+  <ul>
+    <li>No single public dataset tracks enterprise marketing artifact production volumes comprehensively. These are synthesized estimates.</li>
+    <li>AI-driven content production (2025-2026) is rapidly inflating volumes — estimates may be conservative within 12-18 months.</li>
+    <li>Multi-brand conglomerates (e.g., P&G, Unilever) could be 3-5x the "Largest" tier when counted across all brands.</li>
+    <li>B2C verticals (Commerce, Healthcare consumer) skew dramatically higher on email and paid media than B2B-heavy verticals.</li>
+    <li>Localization multipliers are NOT included — a company operating in 10 markets could multiply web/email volumes by 3-8x.</li>
+  </ul>
+</div>
+</div>
+
+</div>
+
+<script>
+
+const fmt = n => '$' + n.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+const fmtUnit = n => '$' + n.toLocaleString(undefined, {minimumFractionDigits: n % 1 !== 0 ? 2 : 0, maximumFractionDigits: 2});
+
+// Tab switching
+const TAB_MAP = {
+  'definitions': 'Term Definitions',
+  'usecases': 'Use Cases', 'calculator': 'Pricing Calculator',
+  'proposal': 'Client Proposal'
+};
+function showTab(tab) {
+  Object.keys(TAB_MAP).forEach(t => {
+    var el = document.getElementById('tab-' + t);
+    if (el) el.classList.toggle('hidden', t !== tab);
+  });
+  document.querySelectorAll('.tab-bar button').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === TAB_MAP[tab]);
+  });
+}
+
+// Init
+
+// ==================== CREDITS CALCULATOR ====================
+var CREDIT_GROUPS = [
+  { name: "Pages", items: [
+    {"type": "New Page Creation", "count": 1527, "mean": 15.5, "median": 7, "low": [2, 6], "med": [6, 21], "high": [21, 67], "p90": 40, "max": 246, "avgCost": 19.49},
+    {"type": "Translated Page", "count": 1527, "mean": 15.5, "median": 7, "low": [2, 6], "med": [6, 21], "high": [21, 67], "p90": 40, "max": 246, "avgCost": 19.49}
+  ]},
+  { name: "Email", items: [
+    {"type": "Create Email", "count": 200, "mean": 3.1, "median": 0, "low": [1, 2], "med": [2, 5], "high": [5, 33], "p90": 7, "max": 87, "avgCost": 3.8}
+  ]},
+  { name: "Migration", items: [
+    {"type": "Page Migration", "count": 107, "mean": 28.1, "median": 15, "low": [5, 11], "med": [11, 30], "high": [30, 100], "p90": 68, "max": 165, "avgCost": 11.06},
+    {"type": "Asset/Component Migration", "count": 577, "mean": 2.7, "median": 1, "low": [1, 1], "med": [1, 2], "high": [2, 14], "p90": 12, "max": 45, "avgCost": 0.89}
+  ]},
+  { name: "Report / Scan", items: [
+    {"type": "QA / Scan / Audit", "count": 739, "mean": 6.6, "median": 1, "low": [1, 1], "med": [1, 8], "high": [8, 59], "p90": 17, "max": 206, "avgCost": 5.05},
+    {"type": "GEO Report", "count": 0, "mean": 40.0, "median": 40, "low": [10, 20], "med": [20, 40], "high": [40, 80], "p90": 80, "max": 80, "avgCost": 22.0},
+    {"type": "CX Report", "count": 0, "mean": 40.0, "median": 40, "low": [10, 20], "med": [20, 40], "high": [40, 80], "p90": 80, "max": 80, "avgCost": 22.0}
+  ]},
+  { name: "Update", items: [
+    {"type": "Update", "count": 0, "mean": 7.5, "median": 7, "low": [1, 3], "med": [3, 7], "high": [7, 12], "p90": 12, "max": 12, "avgCost": 5.50}
+  ]},
+  { name: "Asset / Metadata", items: [
+    {"type": "Asset Upload / Image Swap", "count": 226, "mean": 1.5, "median": 0, "low": [1, 1], "med": [1, 2], "high": [2, 13], "p90": 2, "max": 68, "avgCost": 2.65},
+    {"type": "Metadata / Tag Update", "count": 360, "mean": 2.0, "median": 1, "low": [1, 1], "med": [1, 2], "high": [2, 14], "p90": 4, "max": 33, "avgCost": 1.35}
+  ]}
+];
+
+var CREDIT_DATA = [];
+CREDIT_GROUPS.forEach(function(g) { g.items.forEach(function(d) { CREDIT_DATA.push(d); }); });
+
+var CREDIT_TIERS = [
+  { name: 'Starter',    max: 5000,    discount: 0,  overageMarkup: 1.50 },
+  { name: 'Growth',     max: 15000,   discount: 5,  overageMarkup: 1.40 },
+  { name: 'Professional', max: 40000, discount: 10, overageMarkup: 1.30 },
+  { name: 'Enterprise', max: 100000,  discount: 15, overageMarkup: 1.25 },
+  { name: 'Strategic',  max: Infinity, discount: 20, overageMarkup: 1.20 },
+];
+
+function getActiveTier(credits) {
+  for (var i = 0; i < CREDIT_TIERS.length; i++) {
+    if (credits <= CREDIT_TIERS[i].max) return CREDIT_TIERS[i];
+  }
+  return CREDIT_TIERS[CREDIT_TIERS.length - 1];
+}
+
+function buildTierTable(basePrice, medCredits) {
+  var table = document.getElementById('tier-table');
+  while (table.rows.length > 1) table.deleteRow(1);
+  var activeTier = getActiveTier(medCredits);
+  CREDIT_TIERS.forEach(function(t) {
+    var row = table.insertRow();
+    if (t === activeTier) row.style.background = '#f3f0ff';
+    var maxLabel = t.max === Infinity ? '100,000+' : '\u2264 ' + t.max.toLocaleString();
+    var tierPrice = basePrice * (1 - t.discount / 100);
+    var overagePrice = tierPrice * t.overageMarkup;
+    row.innerHTML = '<td style="text-align:left;padding:8px 10px;border-bottom:1px solid #f3f0ff;font-weight:600;">' + t.name + '</td>' +
+      '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + maxLabel + '</td>' +
+      '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">$' + tierPrice.toFixed(2) + '</td>' +
+      '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + (t.discount > 0 ? t.discount + '%' : '\u2014') + '</td>' +
+      '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;color:#C62828;">$' + overagePrice.toFixed(2) + '</td>';
+  });
+  var matchEl = document.getElementById('tier-match');
+  if (medCredits > 0) {
+    matchEl.innerHTML = 'Your estimated volume of <strong>' + medCredits.toLocaleString() + ' credits</strong> qualifies for the <strong>' + activeTier.name + '</strong> tier' +
+      (activeTier.discount > 0 ? ' (' + activeTier.discount + '% credit discount)' : '') + '.';
+  } else {
+    matchEl.innerHTML = '';
+  }
+  return activeTier;
+}
+
+function buildIntegrationNames() {
+  var nativeCount = parseInt(document.getElementById('int-native').value) || 0;
+  var nnCount = parseInt(document.getElementById('int-nonnative').value) || 0;
+  var container = document.getElementById('integration-names');
+
+  // Preserve existing values
+  var existingNative = {};
+  var existingNN = {};
+  container.querySelectorAll('input[data-type="native"]').forEach(function(inp) { existingNative[inp.dataset.index] = inp.value; });
+  container.querySelectorAll('input[data-type="nonnative"]').forEach(function(inp) { existingNN[inp.dataset.index] = inp.value; });
+
+  if (nativeCount === 0 && nnCount === 0) { container.innerHTML = ''; return; }
+
+  var html = '';
+  if (nativeCount > 0) {
+    html += '<div style="margin-bottom:12px;">';
+    html += '<div style="font-size:0.72rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Native Integration Names</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">';
+    for (var i = 0; i < nativeCount; i++) {
+      var val = existingNative[i] !== undefined ? existingNative[i] : '';
+      var extra = i >= 3 ? ' (+$25K)' : '';
+      html += '<input type="text" data-type="native" data-index="' + i + '" value="' + val.replace(/"/g, '&quot;') + '" placeholder="Native ' + (i + 1) + extra + ' (e.g. Adobe AEM)" style="padding:7px 10px;border:1px solid #ede9fe;border-radius:6px;font-size:0.82rem;color:#555;background:#faf8ff;">';
+    }
+    html += '</div></div>';
+  }
+  if (nnCount > 0) {
+    html += '<div>';
+    html += '<div style="font-size:0.72rem;font-weight:700;color:#db2777;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:6px;">Non-Native Integration Names</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">';
+    for (var i = 0; i < nnCount; i++) {
+      var val = existingNN[i] !== undefined ? existingNN[i] : '';
+      html += '<input type="text" data-type="nonnative" data-index="' + i + '" value="' + val.replace(/"/g, '&quot;') + '" placeholder="Non-Native ' + (i + 1) + ' (+$50K) (e.g. Salesforce)" style="padding:7px 10px;border:1px solid #fce7f3;border-radius:6px;font-size:0.82rem;color:#555;background:#fdf2f8;">';
+    }
+    html += '</div></div>';
+  }
+  container.innerHTML = html;
+}
+
+function buildRows() {
+  var grid = document.getElementById('calc-grid');
+  var idx = 0;
+  CREDIT_GROUPS.forEach(function(group) {
+    grid.insertAdjacentHTML('beforeend',
+      '<div style="grid-column:1/-1;background:#f8f5ff;padding:10px 14px;font-size:0.82rem;font-weight:800;color:#7c3aed;text-transform:uppercase;letter-spacing:0.8px;border-bottom:2px solid #ede9fe;border-top:1px solid #ede9fe;">' + group.name + '</div>');
+    group.items.forEach(function(d) {
+      var i = idx++;
+      var subtitle = d.count > 0 ? 'avg ' + d.mean + ' credits' : 'est. ' + d.low[1] + '\u2013' + d.high[1] + ' credits';
+      var cells = '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;font-size:0.85rem;display:flex;align-items:center;font-weight:600;color:#2d3436;">' + d.type + '</div>' +
+        '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;display:flex;align-items:center;"><input type="number" min="0" value="" placeholder="0" id="vol-' + i + '" oninput="recalcAll()" style="width:100%;border:2px solid #ddd;border-radius:6px;padding:6px 10px;font-size:0.85rem;text-align:right;background:#fafafa;"></div>' +
+        '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;display:flex;align-items:center;justify-content:flex-end;font-family:monospace;font-weight:600;color:#059669;font-size:0.85rem;" id="low-' + i + '">\u2014</div>' +
+        '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;display:flex;align-items:center;justify-content:flex-end;font-family:monospace;font-weight:600;color:#e67e22;font-size:0.85rem;" id="med-' + i + '">\u2014</div>' +
+        '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;display:flex;align-items:center;justify-content:flex-end;font-family:monospace;font-weight:600;color:#e74c3c;font-size:0.85rem;" id="high-' + i + '">\u2014</div>' +
+        '<div style="padding:10px 14px;border-bottom:1px solid #f3f0ff;display:flex;align-items:center;justify-content:flex-end;font-family:monospace;font-weight:600;color:#2563eb;font-size:0.85rem;" id="cost-' + i + '">\u2014</div>' +
+        '<div style="grid-column:1/-1;padding:2px 14px 8px 14px;font-size:0.72rem;color:#999;border-bottom:1px solid #f3f0ff;">' + subtitle + '</div>';
+      grid.insertAdjacentHTML('beforeend', cells);
+    });
+  });
+}
+
+function recalcAll() {
+  var totalLow = 0, totalMed = 0, totalHigh = 0, totalCost = 0;
+  CREDIT_DATA.forEach(function(d, i) {
+    var vol = parseInt(document.getElementById('vol-' + i).value) || 0;
+    if (vol === 0) {
+      document.getElementById('low-' + i).textContent = '\u2014';
+      document.getElementById('med-' + i).textContent = '\u2014';
+      document.getElementById('high-' + i).textContent = '\u2014';
+      document.getElementById('cost-' + i).textContent = '\u2014';
+      return;
+    }
+    var lowMin = d.low[0] * vol, lowMax = d.low[1] * vol;
+    var medMin = d.med[0] * vol, medMax = d.med[1] * vol;
+    var highMin = d.high[0] * vol, highMax = d.high[1] * vol;
+    document.getElementById('low-' + i).textContent = lowMin === lowMax ? lowMin.toLocaleString() : lowMin.toLocaleString() + '\u2013' + lowMax.toLocaleString();
+    document.getElementById('med-' + i).textContent = medMin === medMax ? medMin.toLocaleString() : medMin.toLocaleString() + '\u2013' + medMax.toLocaleString();
+    document.getElementById('high-' + i).textContent = highMin === highMax ? highMin.toLocaleString() : highMin.toLocaleString() + '\u2013' + highMax.toLocaleString();
+    var cost = d.avgCost * vol;
+    document.getElementById('cost-' + i).textContent = '~$' + cost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    totalLow += lowMax; totalMed += medMax; totalHigh += highMax; totalCost += cost;
+  });
+  document.getElementById('total-low').textContent = totalLow.toLocaleString();
+  document.getElementById('total-med').textContent = totalMed.toLocaleString();
+  document.getElementById('total-high').textContent = totalHigh.toLocaleString();
+  document.getElementById('total-cost').textContent = '$' + totalCost.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+
+  // Credits override: show estimated value as placeholder, use override if entered
+  var creditsOverrideEl = document.getElementById('fee-credits-override');
+  var creditsHintEl = document.getElementById('credits-override-hint');
+  var wrapCreditsEl = document.getElementById('wrap-credits-override');
+  creditsOverrideEl.placeholder = totalMed.toLocaleString();
+  var creditsOverrideVal = creditsOverrideEl.value.trim();
+  if (creditsOverrideVal !== '') {
+    totalMed = parseInt(creditsOverrideVal) || 0;
+    creditsHintEl.textContent = 'Manual override active';
+    creditsHintEl.style.color = '#7c3aed';
+    wrapCreditsEl.style.borderColor = '#7c3aed';
+  } else {
+    creditsHintEl.textContent = 'Auto-calculated from volumes';
+    creditsHintEl.style.color = '#999';
+    wrapCreditsEl.style.borderColor = '#ddd';
+  }
+
+  var licenseFee = parseFloat(document.getElementById('fee-license').value) || 0;
+  var supportFee = parseFloat(document.getElementById('fee-support').value) || 0;
+  var creditPrice = parseFloat(document.getElementById('fee-credit').value) || 0;
+  var years = parseInt(document.getElementById('fee-years').value) || 1;
+
+  var activeTier = buildTierTable(creditPrice, totalMed);
+  var effectiveCreditPrice = creditPrice * (1 - activeTier.discount / 100);
+  var overageRate = effectiveCreditPrice * activeTier.overageMarkup;
+
+  var nativeInt = parseInt(document.getElementById('int-native').value) || 0;
+  var nonNativeInt = parseInt(document.getElementById('int-nonnative').value) || 0;
+  var extraNative = Math.max(0, nativeInt - 3);
+  var integrationSurcharge = extraNative * 25000 + nonNativeInt * 50000;
+  var effectiveLicense = licenseFee + integrationSurcharge;
+
+  var licSurchargeEl = document.getElementById('license-surcharge');
+  if (integrationSurcharge > 0) {
+    var detail = '';
+    if (extraNative > 0) detail += extraNative + ' extra native \u00d7 $25K';
+    if (nonNativeInt > 0) detail += (detail ? ' + ' : '') + nonNativeInt + ' non-native \u00d7 $50K';
+    licSurchargeEl.innerHTML = 'Base $' + licenseFee.toLocaleString() + ' + $' + integrationSurcharge.toLocaleString() + ' integrations = <strong>$' + effectiveLicense.toLocaleString() + '</strong><br><span style="font-size:0.72rem;color:#888;">' + detail + '</span>';
+    licSurchargeEl.style.display = 'block';
+  } else {
+    licSurchargeEl.style.display = 'none';
+  }
+
+  var creditRevenuePerYear = totalMed * effectiveCreditPrice;
+  var annualGross = effectiveLicense + supportFee + creditRevenuePerYear;
+
+  var fmtC = function(v) { return '$' + v.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}); };
+  var breakdownEl = document.getElementById('year-breakdown');
+
+  var anyDiscount = false;
+  for (var y = 1; y <= years; y++) {
+    var el = document.getElementById('discount-y' + y);
+    if (el && parseFloat(el.value) > 0) { anyDiscount = true; break; }
+  }
+
+  var tableHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;"><tr>';
+  tableHTML += '<th style="text-align:left;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Year</th>';
+  tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">License</th>';
+  tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Support</th>';
+  tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Credits</th>';
+  tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Volume</th>';
+  if (anyDiscount) tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Discount</th>';
+  tableHTML += '<th style="text-align:right;padding:8px 10px;background:#f8f5ff;color:#7c3aed;font-weight:600;border-bottom:2px solid #ede9fe;font-size:0.78rem;text-transform:uppercase;">Year Total</th></tr>';
+
+  var grandTotal = 0, grandDiscount = 0, grandCogs = 0;
+  for (var y = 1; y <= years; y++) {
+    var discEl = document.getElementById('discount-y' + y);
+    var discPct = discEl ? (parseFloat(discEl.value) || 0) : 0;
+    var yearDiscount = annualGross * (discPct / 100);
+    var yearNet = annualGross - yearDiscount;
+    tableHTML += '<tr><td style="padding:8px 10px;border-bottom:1px solid #f3f0ff;font-weight:600;">Year ' + y + '</td>';
+    tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + fmtC(effectiveLicense) + '</td>';
+    tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + fmtC(supportFee) + '</td>';
+    tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + fmtC(creditRevenuePerYear) + '</td>';
+    tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;">' + totalMed.toLocaleString() + '</td>';
+    if (anyDiscount) {
+      if (discPct > 0) {
+        tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;color:#e65100;">-' + fmtC(yearDiscount) + ' (' + discPct + '%)</td>';
+      } else {
+        tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;color:#999;">\u2014</td>';
+      }
+    }
+    tableHTML += '<td class="num" style="padding:8px 10px;border-bottom:1px solid #f3f0ff;font-weight:700;">' + fmtC(yearNet) + '</td></tr>';
+    grandTotal += yearNet; grandDiscount += yearDiscount; grandCogs += totalCost;
+  }
+  if (years > 1) {
+    var colspan = anyDiscount ? 6 : 5;
+    tableHTML += '<tr style="font-weight:700;border-top:2px solid #7c3aed;"><td colspan="' + colspan + '" style="padding:10px;">Total (' + years + ' years)</td><td class="num" style="padding:10px;color:#db2777;">' + fmtC(grandTotal) + '</td></tr>';
+  }
+  tableHTML += '</table>';
+  breakdownEl.innerHTML = tableHTML;
+
+  document.getElementById('pricing-total').textContent = fmtC(grandTotal);
+  document.getElementById('pricing-total-detail').textContent = years > 1 ? years + '-year contract' : 'annual';
+  document.getElementById('pricing-credits-vol').textContent = totalMed.toLocaleString();
+  var credDetail = years > 1 ? totalMed.toLocaleString() + ' credits/yr \u00d7 ' + years + ' yrs = ' + (totalMed * years).toLocaleString() : 'credits/year';
+  if (activeTier.discount > 0) credDetail += ' \u00b7 $' + effectiveCreditPrice.toFixed(2) + '/credit';
+  document.getElementById('pricing-credits-vol-detail').textContent = credDetail;
+  var tierDiscount = activeTier.discount > 0 ? (totalMed * creditPrice - totalMed * effectiveCreditPrice) * years : 0;
+  document.getElementById('pricing-discount-total').textContent = (grandDiscount + tierDiscount) > 0 ? '-' + fmtC(grandDiscount + tierDiscount) : '$0';
+  document.getElementById('pricing-cogs').textContent = fmtC(grandCogs);
+  document.getElementById('pricing-cogs-detail').textContent = fmtC(totalCost) + '/year \u00b7 overage: $' + overageRate.toFixed(2) + '/credit';
+
+  var marginCard = document.getElementById('margin-card');
+  if (grandTotal > 0) {
+    var margin = ((grandTotal - grandCogs) / grandTotal * 100);
+    document.getElementById('pricing-margin').textContent = margin.toFixed(1) + '%';
+    document.getElementById('pricing-margin-detail').textContent = 'revenue ' + fmtC(grandTotal) + ' \u2014 COGS ' + fmtC(grandCogs);
+    if (margin < 90) {
+      marginCard.style.borderTopColor = '#e74c3c';
+      document.getElementById('pricing-margin').style.color = '#e74c3c';
+      document.getElementById('pricing-margin').style.webkitTextFillColor = '#e74c3c';
+    } else {
+      marginCard.style.borderTopColor = '#059669';
+      document.getElementById('pricing-margin').style.color = '#059669';
+      document.getElementById('pricing-margin').style.webkitTextFillColor = '#059669';
+    }
+  } else {
+    document.getElementById('pricing-margin').textContent = '\u2014';
+    document.getElementById('pricing-margin-detail').textContent = '';
+    marginCard.style.borderTopColor = '#059669';
+  }
+}
+
+function enforceMins() {
+  var licenseEl = document.getElementById('fee-license');
+  var licenseWrap = document.getElementById('wrap-license');
+  var nativeInt = parseInt(document.getElementById('int-native').value) || 0;
+  var nonNativeInt = parseInt(document.getElementById('int-nonnative').value) || 0;
+  var extraNative = Math.max(0, nativeInt - 3);
+  var surcharge = extraNative * 25000 + nonNativeInt * 50000;
+  var effectiveLic = (parseFloat(licenseEl.value) || 0) + surcharge;
+  if (effectiveLic < 150000 && licenseEl.value !== '') {
+    licenseWrap.style.borderColor = '#e74c3c'; licenseWrap.style.background = '#fff5f5';
+  } else {
+    licenseWrap.style.borderColor = '#ddd'; licenseWrap.style.background = '#fafafa';
+  }
+}
+
+function buildYearDiscounts() {
+  var years = parseInt(document.getElementById('fee-years').value) || 1;
+  var container = document.getElementById('year-discounts');
+  var existing = {};
+  for (var y = 1; y <= 5; y++) {
+    var el = document.getElementById('discount-y' + y);
+    if (el) existing[y] = el.value;
+  }
+  if (years <= 1) { container.innerHTML = ''; return; }
+  var html = '<div style="font-size:0.78rem;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Discount per Year</div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(' + years + ',1fr);gap:12px;">';
+  for (var y = 1; y <= years; y++) {
+    var val = existing[y] || '0';
+    html += '<div><div style="font-size:0.72rem;color:#777;margin-bottom:4px;">Year ' + y + '</div>';
+    html += '<div style="display:flex;align-items:center;background:#fafafa;border:2px solid #ddd;border-radius:8px;overflow:hidden;"><input type="number" id="discount-y' + y + '" value="' + val + '" min="0" max="100" step="1" oninput="recalcAll()" style="border:none;background:transparent;padding:8px 12px;font-size:15px;font-weight:600;color:#1a1a2e;width:100%;outline:none;text-align:center;"><span style="padding:8px 4px 8px 2px;font-size:15px;font-weight:600;color:#999;">%</span></div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function clearAll() {
+  CREDIT_DATA.forEach(function(d, i) {
+    document.getElementById('vol-' + i).value = '';
+  });
+  for (var y = 1; y <= 5; y++) {
+    var el = document.getElementById('discount-y' + y);
+    if (el) el.value = '0';
+  }
+  recalcAll();
+}
+
+buildRows();
+buildIntegrationNames();
+recalcAll();
+
+// ==================== CLIENT PROPOSAL GENERATOR ====================
+// Set default dates on load
+(function() {
+  const today = new Date();
+  const dd = s => String(s).padStart(2,'0');
+  document.getElementById('prop-date').value = today.getFullYear() + '-' + dd(today.getMonth()+1) + '-' + dd(today.getDate());
+  const valid = new Date(today); valid.setDate(valid.getDate() + 30);
+  document.getElementById('prop-valid').value = valid.getFullYear() + '-' + dd(valid.getMonth()+1) + '-' + dd(valid.getDate());
+})();
+
+
+function generateProposal() {
+  const clientName = document.getElementById('prop-client').value.trim() || '[Client Name]';
+  const preparedBy = document.getElementById('prop-preparedby').value.trim() || 'Gradial Sales Team';
+  const propDate = document.getElementById('prop-date').value || 'TBD';
+  const validUntil = document.getElementById('prop-valid').value || 'TBD';
+  const fmtDate = d => { if(!d || d==='TBD') return 'TBD'; const p=d.split('-'); return new Date(p[0],p[1]-1,p[2]).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); };
+
+  // Read use case selections
+  var ucDesired = []; document.querySelectorAll('#uc-desired input:checked').forEach(function(cb) { ucDesired.push(cb.value); });
+  var ucDesiredCustom = document.getElementById('uc-desired-custom').value.trim(); if (ucDesiredCustom) ucDesired.push(ucDesiredCustom);
+  var ucInterested = []; document.querySelectorAll('#uc-interested input:checked').forEach(function(cb) { ucInterested.push(cb.value); });
+  var ucInterestedCustom = document.getElementById('uc-interested-custom').value.trim(); if (ucInterestedCustom) ucInterested.push(ucInterestedCustom);
+
+  // ---- Read from CREDITS CALCULATOR ----
+  var licenseFee = parseFloat(document.getElementById('fee-license').value) || 0;
+  var creditPrice = parseFloat(document.getElementById('fee-credit').value) || 0;
+  var yearsVal = parseInt(document.getElementById('fee-years').value) || 1;
+  var propTerm = yearsVal * 12; // Convert years to months
+
+  // Read support tier (dropdown)
+  var supportSelect = document.getElementById('fee-support');
+  var supportFeeVal = parseFloat(supportSelect.value) || 0;
+  var supportLabelText = supportSelect.options[supportSelect.selectedIndex] ? supportSelect.options[supportSelect.selectedIndex].text : '';
+  supportLabel = supportLabelText.split(' — ')[0] || 'Basic';
+
+  // Read integration counts
+  var nativeInt = parseInt(document.getElementById('int-native').value) || 0;
+  var nonNativeInt = parseInt(document.getElementById('int-nonnative').value) || 0;
+  var extraNative = Math.max(0, nativeInt - 3);
+  var integrationSurcharge = extraNative * 25000 + nonNativeInt * 50000;
+
+  // Calculate total medium credits from CREDIT_DATA (or use override)
+  var totalMed = 0;
+  CREDIT_DATA.forEach(function(d, i) {
+    var vol = parseInt(document.getElementById('vol-' + i).value) || 0;
+    if (vol > 0) {
+      var medMin = d.med[0] * vol, medMax = d.med[1] * vol;
+      totalMed += medMax;
+    }
+  });
+  var creditsOverrideVal = (document.getElementById('fee-credits-override').value || '').trim();
+  if (creditsOverrideVal !== '') {
+    totalMed = parseInt(creditsOverrideVal) || 0;
+  }
+
+  // Get tier based on total medium credits
+  var activeTier = getActiveTier(totalMed);
+  var effectiveCreditPrice = creditPrice * (1 - activeTier.discount / 100);
+  var overageRate = effectiveCreditPrice * activeTier.overageMarkup;
+  var creditRevenuePerYear = totalMed * effectiveCreditPrice;
+
+  // Build per-group volumes (v object maps credit group names to total med credits)
+  var v = {};
+  CREDIT_GROUPS.forEach(function(g) {
+    var groupTotal = 0;
+    g.items.forEach(function(item) {
+      var idx = CREDIT_DATA.indexOf(item);
+      if (idx >= 0) {
+        var vol = parseInt(document.getElementById('vol-' + idx).value) || 0;
+        if (vol > 0) {
+          var medMin = item.med[0] * vol, medMax = item.med[1] * vol;
+          groupTotal += medMax;
+        }
+      }
+    });
+    v[g.name] = groupTotal;
+  });
+
+  // Effective license (base fee + integration surcharge)
+  var effectiveLicense = licenseFee + integrationSurcharge;
+
+  // Year discounts
+  var yearDiscounts = [];
+  for (var y = 1; y <= yearsVal; y++) {
+    var discEl = document.getElementById('discount-y' + y);
+    yearDiscounts[y] = discEl ? (parseFloat(discEl.value) || 0) : 0;
+  }
+
+  // Compute annual total before any year-specific discounts
+  var annualGross = effectiveLicense + supportFeeVal + creditRevenuePerYear;
+
+  // Apply year discounts to compute year-by-year totals
+  var yearlyTotals = [];
+  var grandTotal = 0;
+  for (var y = 1; y <= yearsVal; y++) {
+    var yearDisc = yearDiscounts[y] || 0;
+    var yearDiscAmt = annualGross * (yearDisc / 100);
+    var yearNet = annualGross - yearDiscAmt;
+    yearlyTotals[y] = yearNet;
+    grandTotal += yearNet;
+  }
+
+  // Read integration names
+  var nativeNames = [];
+  var nnNames = [];
+  var container = document.getElementById('integration-names');
+  if (container) {
+    container.querySelectorAll('input[data-type="native"]').forEach(function(inp) {
+      nativeNames.push(inp.value || ('Native ' + (nativeNames.length + 1)));
+    });
+    container.querySelectorAll('input[data-type="nonnative"]').forEach(function(inp) {
+      nnNames.push(inp.value || ('Non-Native ' + (nnNames.length + 1)));
+    });
+  }
+
+  // Build licenseIncludes array
+  var licenseIncludes = ['QA/Governance', 'Up to 3 Native Integrations', nonNativeInt + ' Non-Native Integration' + (nonNativeInt !== 1 ? 's' : '')];
+  if (extraNative > 0) {
+    licenseIncludes.push(extraNative + ' Additional Native Integration' + (extraNative > 1 ? 's' : '') + ' ($25K each)');
+  }
+  licenseIncludes.push(supportLabel + ' Support');
+
+  // Construct best object
+  best = {
+    total: grandTotal,
+    creditRevenue: creditRevenuePerYear,
+    supCost: supportFeeVal,
+    effectiveLicense: effectiveLicense,
+    effectiveSupport: supportFeeVal,
+    nativeCost: extraNative * 25000,
+    nnCost: nonNativeInt * 50000,
+    extraNative: extraNative,
+    extraNN: nonNativeInt,
+    tier: {
+      name: activeTier.name + ' Credits',
+      color: '#7c3aed',
+      license: licenseFee,
+      integration: integrationSurcharge,
+      licenseIncludes: licenseIncludes,
+      integrationNames: { native: nativeNames, nonnative: nnNames }
+    }
+  };
+  bt = best.tier;
+
+  // Support for multi-year summary display
+  var pYr1 = yearlyTotals[1] || annualGross;
+  var pYr2 = yearlyTotals[2] || annualGross;
+  var pYr3 = yearlyTotals[3] || annualGross;
+  var pYr1D = annualGross - pYr1;
+  var pYr2D = annualGross - pYr2;
+
+  // Build the proposal HTML
+  let h = '';
+
+  // ---- HEADER ----
+  h += '<div id="proposal-printable" style="background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;">';
+
+  // Title bar
+  h += '<div style="background:linear-gradient(135deg,#7c3aed 0%,#db2777 100%);color:#fff;padding:40px 40px 32px;display:flex;justify-content:space-between;align-items:center;">';
+  h += '<div>';
+  h += '<div style="font-size:2rem;font-weight:800;margin-bottom:4px;">Gradial Content Operations Proposal</div>';
+  h += '<div style="font-size:1.1rem;opacity:0.85;">Prepared for <strong>' + clientName + '</strong></div>';
+  h += '</div>';
+  h += '<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzAwIiBoZWlnaHQ9IjM4MiIgdmlld0JveD0iMCAwIDEzMDAgMzgyIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTguMzgsMTU4Ljc2aDUwLjYxYzMyLjE4LDAsNTguMjYtMjYuMDksNTguMjYtNTguMjZoMHMtMTA1LjYyLDAtMTA1LjYyLDBDNDAuNjUsMTAwLjUuOTQsMTQ0LjEyLjk0LDE5Ny45NHM0My42Myw5Ny40NCw5Ny40NCw5Ny40NCw5Ny40NC00My42Myw5Ny40NC05Ny40NGMwLTUuODItLjc0LTExLjY1LTIuMTEtMTcuMDVoLTYwLjA1YzIuNDksNS4xNSwzLjg5LDEwLjk0LDMuODksMTcuMDUsMCwyMS42NC0xNy41NCwzOS4xOC0zOS4xOCwzOS4xOHMtMzkuMTgtMTcuNTQtMzkuMTgtMzkuMTgsMTcuNTQtMzkuMTgsMzkuMTgtMzkuMThaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIyLDEwOS4xOGMtOS4xNiw1LjEtMTYuNywxMS43My0yMi42NSwxOS44N3YtLjM3YzAtMTUuNTctMTIuNjItMjguMTktMjguMTktMjguMTloLTI5Ljl2MjE3LjUyaDYwLjkydi0xMDIuN2MwLTIwLjc1LDUuMzItMzYuMDUsMTUuOTctNDUuODksMTAuNjUtOS44NCwyNC41OS0xNC43Niw0MS44NS0xNC43NiwyLjQyLDAsNC43MS4wNyw2Ljg3LjIsMi4xNS4xNCw0LjU4LjM0LDcuMjguNnYtNTguMjJjLTIwLjQ5LDAtMzcuODcsMy45OC01Mi4xNSwxMS45M1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03ODcuOTMsMTguMDF2MTA1LjI0Yy01LjAxLTUuNDktMTAuNjUtMTAuMTQtMTYuOTgtMTMuODctMTMuNzUtOC4wOS0yOS43OS0xMi4xMy00OC4xMi0xMi4xMy0yMC40OSwwLTM4Ljk1LDQuNTktNTUuMzksMTMuNzUtMTYuNDUsOS4xNy0yOS40NiwyMi4xMS0zOS4wMiwzOC44MS05LjU3LDE2LjcyLTE0LjM1LDM2LjUzLTE0LjM1LDU5LjQ0czQuNzgsNDIuMzIsMTQuMzUsNTkuMDNjOS41NywxNi43MSwyMi41NywyOS43MiwzOS4wMiwzOS4wMSwxNi40NCw5LjMsMzQuOSwxMy45NSw1NS4zOSwxMy45NSwyNC40NCwwLDM2LjEyLTMuMzMsNDkuNzQtMTEuNDIsNy4xNS00LjI1LDE0Ljc5LTExLjk3LDE5LjQxLTIwLjM2aDBjMCwxMy45MSwxMS4xNiwyOC41NSwyOC41NSwyOC41NWgyNy43MlYxOC4wMWgtNjAuMzJaTTc4MS40NSwyNDEuNGMtNS4xNCw5LjA0LTEyLDE1Ljk3LTIwLjU5LDIwLjgyLTguNTksNC44NS0xOC4xNiw3LjI4LTI4LjY5LDcuMjhzLTIwLjUxLTIuNDMtMjkuMS03LjI4Yy04LjYtNC44NS0xNS40NS0xMS43OS0yMC41OC0yMC44Mi01LjEzLTkuMDItNy43LTE5Ljc0LTcuNy0zMi4xNXMyLjU3LTIzLjQ1LDcuNy0zMi4zNWM1LjEyLTguOSwxMS45OC0xNS43NywyMC41OC0yMC42MSw4LjU5LTQuODYsMTguMy03LjI0LDI5LjEtNy4yOHMyMC4xLDIuNDIsMjguNjksNy4yOGM4LjU5LDQuODUsMTUuNDUsMTEuNzIsMjAuNTksMjAuNjEsNS4xMiw4LjksNy42OSwxOS42OCw3LjY5LDMyLjM1cy0yLjU3LDIzLjEyLTcuNjksMzIuMTVaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODk5LjkzLDI4NC40NlYxMDAuNWg2MC4zMnYyMTcuNTJoLTI2Ljc3Yy0xOC41MywwLTMzLjU1LTE1LjAyLTMzLjU1LTMzLjU1WiIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEyNDAuNjIsMjg0LjQ2VjE4LjAxaDYwLjMydjMwMGgtMjYuNzdjLTE4LjUzLDAtMzMuNTUtMTUuMDItMzMuNTUtMzMuNTVaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTU2LjAzLDExNC41MmMtMTguMzMtMTUuNjMtMzguNDQtMjUuMDMtNzMuMzktMjUuMDNzLTY4LjE3LDEwLjQ3LTc3LjksMTUuMTV2NTQuMDVjMTAuNTItNS4zOCw0Ni40OS0xNy40Miw3MC4zMS0xNy40MiwxOS4xOSwwLDI3LjkzLDQuMDIsMzUuODMsMTEuMjYsOC4yMSw3LjU1LDEyLjMzLDE4LjA2LDEyLjMzLDMxLjU0di4xNmgtNTAuMTNjLTIyLjExLDAtNDAuMDMsMi45LTUzLjc4LDguNjgtMTMuNzQsNS43OC0yMy43OSwxMy43NC0zMC4xMiwyMy44OS02LjMzLDEwLjE1LTkuNSwyMS45OS05LjUsMzUuNTNzMy4yMywyNC42Nyw5LjcxLDM1LjFjNi40NywxMC40NCwxNS43NiwxOC42OSwyNy45LDI0Ljc1LDEyLjEzLDYuMDYsMjYuNjgsOS4wOSw0My42Niw5LjA5LDE5LjE0LDAsMzQuNzctMy44MSw0Ni45LTExLjQyLDguMjItNS4xNiwxNC42Ni0xMS45NywxOS40MS0yMC4zNmgwYzAsMTUuNzcsMTIuNzgsMjguNTUsMjguNTUsMjguNTVoMjcuNzJ2LTEzMC4zMmMwLTMzLjE2LTkuMTYtNTcuNTQtMjcuNDktNzMuMThaTTUwNi4xMywyNjcuNjhjLTguMTIsNS45Ny0yMC4wMiw5LjE2LTMwLjg1LDkuMTYtMTEuNCwwLTIwLjM2LTIuNDctMjYuODgtNy40MS02LjU0LTQuOTMtOS44LTExLjYyLTkuOC0yMC4wOSwwLTcuNjEsMi44NS0xMy45NSw4LjU0LTE5LjAzLDUuNjktNS4wOCwxNi4xOC03LjYxLDMxLjQ3LTcuNjFoNDQuNmMwLDIyLjg4LTcuNDIsMzcuODctMTcuMDgsNDQuOThaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE3MS4xMSwxMTQuNTJjLTE4LjMzLTE1LjYzLTM4LjQ0LTI1LjAzLTczLjM5LTI1LjAzcy02OC4xNywxMC40Ny03Ny45LDE1LjE1djU0LjA1YzEwLjUyLTUuMzgsNDYuNDktMTcuNDIsNzAuMzEtMTcuNDIsMTkuMTksMCwyNy45Myw0LjAyLDM1LjgzLDExLjI2LDguMjEsNy41NSwxMi4zMywxOC4wNiwxMi4zMywzMS41NHYuMTZoLTUwLjEzYy0yMi4xMSwwLTQwLjAzLDIuOS01My43OCw4LjY4LTEzLjc0LDUuNzgtMjMuNzksMTMuNzQtMzAuMTIsMjMuODktNi4zMywxMC4xNS05LjUsMjEuOTktOS41LDM1LjUzczMuMjMsMjQuNjcsOS43MSwzNS4xYzYuNDcsMTAuNDQsMTUuNzYsMTguNjksMjcuOSwyNC43NSwxMi4xMyw2LjA2LDI2LjY4LDkuMDksNDMuNjYsOS4wOSwxOS4xNCwwLDM0Ljc3LTMuODEsNDYuOS0xMS40Miw4LjIyLTUuMTYsMTQuNjYtMTEuOTcsMTkuNDEtMjAuMzZoMGMwLDE1Ljc3LDEyLjc4LDI4LjU1LDI4LjU1LDI4LjU1aDI3Ljcydi0xMzAuMzJjMC0zMy4xNi05LjE2LTU3LjU0LTI3LjQ5LTczLjE4Wk0xMTIxLjIxLDI2Ny42OGMtOC4xMiw1Ljk3LTIwLjAyLDkuMTYtMzAuODUsOS4xNi0xMS40LDAtMjAuMzYtMi40Ny0yNi44OC03LjQxLTYuNTQtNC45My05LjgtMTEuNjItOS44LTIwLjA5LDAtNy42MSwyLjg1LTEzLjk1LDguNTQtMTkuMDMsNS42OS01LjA0LDE2LjE4LTcuNjEsMzEuNDctNy42MWg0NC42YzAsMjIuODgtNy40MiwzNy44Ny0xNy4wOCw0NC45OFoiLz48Y2lyY2xlIGNsYXNzPSJjbHMtMSIgY3g9IjkzMC4wOSIgY3k9IjM2LjkzIiByPSIzNi4zNCIvPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0MC4xNSwzMjUuMTNoLTY4LjVjLTEwLjk4LDAtMTkuODgtOC45LTE5Ljg4LTE5Ljg4di0yMS43MmgwYy0yMi45OCwwLTQxLjYsMTguNjMtNDEuNjEsNDEuNmgwczAsMCwwLDAsMCwwLDAsMGgwczAsMCwwLDBjMCwzMS40LDI1LjQ2LDU2Ljg2LDU2Ljg3LDU2Ljg2aDEyOS45OWMwLTMxLjQxLTI1LjQ2LTU2Ljg3LTU2Ljg3LTU2Ljg3WiIvPjwvc3ZnPg==" alt="Gradial" style="max-height:50px;max-width:180px;flex-shrink:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.15));">';
+  h += '</div>';
+
+  // Meta bar
+  h += '<div style="display:flex;gap:0;border-bottom:2px solid #eee;font-size:0.82rem;color:#1a1a2e;">';
+  h += '<div style="flex:1;padding:14px 20px;border-right:1px solid #eee;"><strong>Prepared by:</strong> ' + preparedBy + '</div>';
+  h += '<div style="flex:1;padding:14px 20px;border-right:1px solid #eee;"><strong>Date:</strong> ' + fmtDate(propDate) + '</div>';
+  h += '<div style="flex:1;padding:14px 20px;"><strong>Valid until:</strong> ' + fmtDate(validUntil) + '</div>';
+  h += '</div>';
+
+  // ---- EXECUTIVE SUMMARY ----
+  h += '<div style="padding:32px 40px;color:#1a1a2e;">';
+  h += '<h2 style="font-size:1.2rem;color:#1a1a2e;margin-bottom:16px;border-bottom:2px solid ' + bt.color + ';padding-bottom:8px;">1. Executive Summary</h2>';
+
+  h += '<p style="font-size:0.9rem;color:#1a1a2e;line-height:1.8;margin-bottom:16px;">Based on ' + clientName + '\'s estimated annual request volume of <strong>' + totalMed.toLocaleString() + ' credits</strong>';
+  if (nativeInt > 0 || nonNativeInt > 0) h += ', <strong>' + (nativeInt + nonNativeInt) + ' total integration' + (nativeInt + nonNativeInt !== 1 ? 's' : '') + '</strong>';
+  h += ', Gradial recommends the following subscription.</p>';
+
+  h += '<p style="font-size:0.9rem;color:#1a1a2e;line-height:1.8;margin-bottom:16px;">Thank you and congratulations on entering the agentic era with Gradial as your content operations partner! We\u2019re excited to help ' + clientName + ' unlock new levels of speed, scale, and quality across your content workflows.</p>';
+
+  // Use cases desired & interested
+  if (ucDesired.length > 0 || ucInterested.length > 0) {
+    h += '<div style="display:grid;grid-template-columns:' + (ucDesired.length > 0 && ucInterested.length > 0 ? '1fr 1fr' : '1fr') + ';gap:16px;margin-bottom:20px;">';
+    if (ucDesired.length > 0) {
+      h += '<div style="background:#e6faf5;border:1px solid #059669;border-radius:8px;padding:14px 18px;">';
+      h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;color:#059669;font-weight:700;margin-bottom:8px;">Use Cases Desired</div>';
+      ucDesired.forEach(function(uc) { h += '<div style="font-size:0.84rem;color:#2d3436;padding:3px 0;">&#10003; ' + uc + '</div>'; });
+      h += '</div>';
+    }
+    if (ucInterested.length > 0) {
+      h += '<div style="background:#f3f0ff;border:1px solid #7c3aed;border-radius:8px;padding:14px 18px;">';
+      h += '<div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;color:#7c3aed;font-weight:700;margin-bottom:8px;">Additionally Interested In</div>';
+      ucInterested.forEach(function(uc) { h += '<div style="font-size:0.84rem;color:#2d3436;padding:3px 0;">&#9679; ' + uc + '</div>'; });
+      h += '</div>';
+    }
+    h += '</div>';
+  }
+
+  // ACV highlight
+  var acvColCount = yearsVal > 1 ? 4 : 3;
+  h += '<div style="display:grid;grid-template-columns:repeat(' + acvColCount + ',1fr);gap:16px;margin-bottom:16px;">';
+  h += '<div style="text-align:center;background:linear-gradient(180deg,' + bt.color + '12 0%,#fff 60%);border:2px solid ' + bt.color + ';border-radius:10px;padding:20px 12px;">';
+  h += '<div style="font-size:0.7rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:4px;">Year 1 ACV</div>';
+  h += '<div style="font-size:1.8rem;font-weight:800;color:' + bt.color + ';">' + fmt(pYr1) + '</div>';
+  if (pYr1D > 0) h += '<div style="font-size:0.72rem;color:#059669;font-weight:600;margin-top:2px;">-' + fmt(pYr1D) + ' discount</div>';
+  h += '</div>';
+  if (yearsVal > 1) {
+    var pTCVh = 0;
+    for (var y = 1; y <= yearsVal; y++) pTCVh += yearlyTotals[y] || 0;
+    h += '<div style="text-align:center;background:linear-gradient(180deg,' + bt.color + '08 0%,#fff 60%);border:2px solid ' + bt.color + ';border-radius:10px;padding:20px 12px;">';
+    h += '<div style="font-size:0.7rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:4px;">Total Contract Value</div>';
+    h += '<div style="font-size:1.8rem;font-weight:800;color:' + bt.color + ';">' + fmt(pTCVh) + '</div>';
+    h += '<div style="font-size:0.72rem;color:#1a1a2e;margin-top:2px;">' + yearsVal + '-year term</div></div>';
+  }
+  h += '<div style="text-align:center;background:#f8f9fa;border:1px solid #eee;border-radius:10px;padding:20px 12px;">';
+  h += '<div style="font-size:0.7rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:4px;">Annual Credits</div>';
+  h += '<div style="font-size:1.8rem;font-weight:800;color:#2d3436;">' + totalMed.toLocaleString() + '</div></div>';
+  h += '<div style="text-align:center;background:#f8f9fa;border:1px solid #eee;border-radius:10px;padding:20px 12px;">';
+  h += '<div style="font-size:0.7rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:4px;">Contract Term</div>';
+  var termLabel = yearsVal === 1 ? '12 Months' : yearsVal + ' Years';
+  h += '<div style="font-size:1.8rem;font-weight:800;color:#2d3436;">' + termLabel + '</div></div>';
+  h += '</div>';
+
+  // ---- COST BREAKDOWN ----
+  h += '<h2 style="font-size:1.2rem;color:#1a1a2e;margin-bottom:16px;border-bottom:2px solid ' + bt.color + ';padding-bottom:8px;">2. Pricing Breakdown</h2>';
+  h += '<table style="width:100%;font-size:0.86rem;border-collapse:collapse;margin-bottom:24px;">';
+  h += '<thead><tr style="background:#f8f9fa;"><th style="text-align:left;padding:10px 12px;font-size:0.78rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:0.3px;">Component</th><th style="text-align:right;padding:10px 12px;font-size:0.78rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:0.3px;">Annual Cost</th></tr></thead>';
+  h += '<tbody>';
+
+  // License fee
+  h += '<tr><td style="padding:10px 12px;font-weight:600;">Base License Fee</td><td style="text-align:right;padding:10px 12px;font-weight:600;">' + fmt(licenseFee) + '</td></tr>';
+
+  // Integration surcharge
+  if (integrationSurcharge > 0) {
+    h += '<tr><td style="padding:8px 12px 8px 24px;font-size:0.82rem;">Integration Surcharge</td><td style="text-align:right;padding:8px 12px;">' + fmt(integrationSurcharge) + '</td></tr>';
+    if (extraNative > 0) h += '<tr><td style="padding:4px 12px 4px 36px;font-size:0.78rem;color:#1a1a2e;">Extra Native Integrations (' + extraNative + ' × $25K)</td><td style="text-align:right;padding:4px 12px;font-size:0.78rem;color:#1a1a2e;"></td></tr>';
+    if (nonNativeInt > 0) h += '<tr><td style="padding:4px 12px 8px 36px;font-size:0.78rem;color:#1a1a2e;">Non-Native Integrations (' + nonNativeInt + ' × $50K)</td><td style="text-align:right;padding:4px 12px 8px;font-size:0.78rem;color:#1a1a2e;"></td></tr>';
+    h += '<tr style="font-weight:700;"><td style="padding:6px 12px 10px 24px;">Effective License Fee</td><td style="text-align:right;padding:6px 12px 10px;font-weight:700;">' + fmt(effectiveLicense) + '</td></tr>';
+  }
+
+  // Integration names listing
+  if (nativeNames.length > 0 || nnNames.length > 0) {
+    h += '<tr><td colspan="2" style="padding:12px 12px 4px;font-weight:700;font-size:0.78rem;text-transform:uppercase;color:#1a1a2e;border-top:1px solid #eee;">Integrations</td></tr>';
+    if (nativeNames.length > 0) {
+      h += '<tr><td colspan="2" style="padding:4px 12px 4px 24px;font-size:0.82rem;font-weight:600;">Native Integrations (' + nativeNames.length + ')</td></tr>';
+      nativeNames.forEach(function(name) {
+        h += '<tr><td colspan="2" style="padding:2px 12px 2px 36px;font-size:0.8rem;color:#1a1a2e;">\u2022 ' + name + '</td></tr>';
+      });
+    }
+    if (nnNames.length > 0) {
+      h += '<tr><td colspan="2" style="padding:4px 12px 4px 24px;font-size:0.82rem;font-weight:600;">Non-Native Integrations (' + nnNames.length + ')</td></tr>';
+      nnNames.forEach(function(name) {
+        h += '<tr><td colspan="2" style="padding:2px 12px 2px 36px;font-size:0.8rem;color:#1a1a2e;">\u2022 ' + name + '</td></tr>';
+      });
+    }
+  }
+
+  // Support fee
+  h += '<tr><td style="padding:10px 12px;">' + supportLabel + ' Support</td><td style="text-align:right;padding:10px 12px;">' + fmt(supportFeeVal) + '</td></tr>';
+
+  // Credit volume section
+  h += '<tr><td colspan="2" style="padding:12px 12px 4px;font-weight:700;font-size:0.78rem;text-transform:uppercase;color:#1a1a2e;border-top:1px solid #eee;">Credit Volume</td></tr>';
+  h += '<tr><td style="padding:8px 12px 8px 24px;">Total Estimated Credits</td><td style="text-align:right;padding:8px 12px;">' + totalMed.toLocaleString() + ' credits</td></tr>';
+  h += '<tr><td style="padding:8px 12px 8px 24px;">Price per Credit (base)</td><td style="text-align:right;padding:8px 12px;">$' + creditPrice.toFixed(2) + '</td></tr>';
+  if (activeTier.discount > 0) {
+    h += '<tr><td style="padding:8px 12px 8px 24px;font-size:0.82rem;color:#7c3aed;">\u21b3 Tier Discount (' + activeTier.discount + '%)</td><td style="text-align:right;padding:8px 12px;color:#7c3aed;font-weight:600;font-size:0.82rem;">-' + fmt(totalMed * (creditPrice - effectiveCreditPrice)) + '</td></tr>';
+    h += '<tr><td style="padding:8px 12px 8px 24px;font-size:0.82rem;font-weight:600;">Effective Price per Credit</td><td style="text-align:right;padding:8px 12px;font-weight:600;">$' + effectiveCreditPrice.toFixed(2) + '</td></tr>';
+  }
+  h += '<tr style="font-weight:700;border-top:1px solid #ddd;"><td style="padding:10px 12px 10px 24px;">Annual Credit Revenue</td><td style="text-align:right;padding:10px 12px;font-weight:700;">' + fmt(creditRevenuePerYear) + '</td></tr>';
+  h += '<tr><td colspan="2" style="padding:4px 12px 4px 24px;font-size:0.78rem;font-style:italic;color:#1a1a2e;">Credits consumed beyond the contracted ' + totalMed.toLocaleString() + ' annual credits will be billed at the overage rate of $' + overageRate.toFixed(2) + '/credit (' + Math.round((activeTier.overageMarkup - 1) * 100) + '% markup on effective credit price).</td></tr>';
+  h += '<tr><td colspan="2" style="padding:0 12px 4px 24px;font-size:0.78rem;font-style:italic;color:#1a1a2e;">Up to 20% of your total credits volume can rollover into the next year at no payment penalty.</td></tr>';
+  h += '<tr><td colspan="2" style="padding:0 12px 4px 24px;font-size:0.78rem;font-style:italic;color:#1a1a2e;">Overages will be billed in the month following the period in which overage usage begins. Customers will have access to a real-time dashboard to monitor credits usage and artifact output.</td></tr>';
+
+  // Year-by-year if multi-year
+  if (yearsVal > 1) {
+    h += '<tr><td colspan="2" style="padding:12px 12px 4px;font-weight:700;font-size:0.78rem;text-transform:uppercase;color:#059669;border-top:1px solid #eee;">Year-by-Year Breakdown</td></tr>';
+    for (var y = 1; y <= yearsVal; y++) {
+      var yearDisc = yearDiscounts[y] || 0;
+      var yearTotal = yearlyTotals[y] || annualGross;
+      h += '<tr><td style="padding:8px 12px 8px 24px;">Year ' + y;
+      if (yearDisc > 0) h += ' (with ' + yearDisc + '% discount)';
+      h += '</td><td style="text-align:right;padding:8px 12px;' + (yearDisc > 0 ? 'color:#059669;font-weight:600;' : '') + '">' + fmt(yearTotal) + '</td></tr>';
+    }
+  }
+
+  // TOTAL
+  h += '<tr style="font-weight:800;font-size:1.05rem;border-top:3px solid ' + bt.color + ';"><td style="padding:14px 12px;">Year 1 ACV</td><td style="text-align:right;padding:14px 12px;color:' + bt.color + ';">' + fmt(pYr1) + '</td></tr>';
+  if (yearsVal > 1) {
+    var pTCV = 0;
+    for (var y = 1; y <= yearsVal; y++) pTCV += yearlyTotals[y] || 0;
+    h += '<tr style="font-weight:800;font-size:1.15rem;border-top:2px solid ' + bt.color + ';background:' + bt.color + '08;"><td style="padding:14px 12px;">Total Contract Value (' + yearsVal + ' Years)</td><td style="text-align:right;padding:14px 12px;color:' + bt.color + ';">' + fmt(pTCV) + '</td></tr>';
+  }
+  h += '</tbody></table>';
+
+  // Credits by Request Type section
+  h += '<div style="background:#f8f9fa;border:1px solid #eee;border-radius:10px;padding:18px 20px;margin-bottom:24px;">';
+  h += '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#1a1a2e;letter-spacing:0.5px;margin-bottom:12px;">Credits by Request Type</div>';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:0.84rem;">';
+  h += '<thead><tr style="border-bottom:2px solid #eee;"><th style="text-align:left;padding:8px 12px;color:#1a1a2e;">Category</th><th style="text-align:right;padding:8px 12px;color:#1a1a2e;">Total Credits</th><th style="text-align:right;padding:8px 12px;color:#1a1a2e;">% of Total</th></tr></thead>';
+  h += '<tbody>';
+  CREDIT_GROUPS.forEach(function(g) {
+    if (v[g.name] > 0) {
+      var pct = ((v[g.name] / totalMed) * 100).toFixed(1);
+      h += '<tr style="border-bottom:1px solid #eee;">';
+      h += '<td style="padding:8px 12px;font-weight:600;">' + g.name + '</td>';
+      h += '<td style="text-align:right;padding:8px 12px;">' + v[g.name].toLocaleString() + '</td>';
+      h += '<td style="text-align:right;padding:8px 12px;font-weight:700;color:' + bt.color + ';">' + pct + '%</td>';
+      h += '</tr>';
+    }
+  });
+  h += '</tbody></table>';
+  h += '</div>';
+
+  // Credit Tiers Schedule
+  h += '<div style="background:#f8f5ff;border:1px solid #e0d4f5;border-radius:10px;padding:18px 20px;margin-bottom:24px;">';
+  h += '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#7c3aed;letter-spacing:0.5px;margin-bottom:12px;">Credit Tier Discounts</div>';
+  h += '<table style="width:100%;border-collapse:collapse;font-size:0.84rem;">';
+  h += '<thead><tr style="border-bottom:2px solid #e0d4f5;"><th style="text-align:left;padding:8px 12px;color:#1a1a2e;">Tier</th><th style="text-align:center;padding:8px 12px;color:#1a1a2e;">Credit Range</th><th style="text-align:center;padding:8px 12px;color:#1a1a2e;">Discount</th><th style="text-align:right;padding:8px 12px;color:#1a1a2e;">Status</th></tr></thead>';
+  h += '<tbody>';
+  CREDIT_TIERS.forEach(function(tier) {
+    var isActive = (tier === activeTier);
+    var rowBg = isActive ? 'background:#f3f0ff;' : '';
+    var maxLabel = tier.max === Infinity ? '100,000+' : tier.max.toLocaleString();
+    h += '<tr style="border-bottom:1px solid #eee;' + rowBg + '">';
+    h += '<td style="padding:8px 12px;font-weight:600;">' + tier.name + '</td>';
+    h += '<td style="text-align:center;padding:8px 12px;">' + maxLabel + '</td>';
+    h += '<td style="text-align:center;padding:8px 12px;font-weight:700;color:#7c3aed;">' + tier.discount + '%</td>';
+    if (isActive) {
+      h += '<td style="text-align:right;padding:8px 12px;"><span style="background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:700;">ACTIVE</span></td>';
+    } else {
+      h += '<td style="text-align:right;padding:8px 12px;color:#1a1a2e;font-size:0.8rem;">\u2014</td>';
+    }
+    h += '</tr>';
+  });
+  h += '</tbody></table>';
+
+  // ---- BUSINESS CASE ----
+  // Map credit groups to artifact types with status quo hours per request
+  var businessMap = {
+    'Pages': { label: 'Web Pages', statusQuoHrs: 5 },
+    'Email': { label: 'Email Campaigns', statusQuoHrs: 3 },
+    'Migration': { label: 'Migration', statusQuoHrs: 4 },
+    'Report / Scan': { label: 'Reports & Scans', statusQuoHrs: 10 },
+    'Update': { label: 'Content Updates', statusQuoHrs: 1 },
+    'Asset / Metadata': { label: 'Assets & Metadata', statusQuoHrs: 2 }
+  };
+  var consultRate = 100; // $/hr
+  var gradialMinutes = 10; // avg minutes per artifact in Gradial
+
+  // Compute per-group request volumes (not credits)
+  var groupRequestVols = {};
+  CREDIT_GROUPS.forEach(function(g) {
+    var totalRequests = 0;
+    g.items.forEach(function(item) {
+      var idx = CREDIT_DATA.indexOf(item);
+      if (idx >= 0) {
+        var vol = parseInt(document.getElementById('vol-' + idx).value) || 0;
+        totalRequests += vol;
+      }
+    });
+    groupRequestVols[g.name] = totalRequests;
+  });
+
+  var totalRequests = 0;
+  var totalStatusQuoHrs = 0;
+  var totalGradialHrs = 0;
+  var businessRows = [];
+  CREDIT_GROUPS.forEach(function(g) {
+    var reqVol = groupRequestVols[g.name] || 0;
+    if (reqVol > 0) {
+      var bm = businessMap[g.name] || { label: g.name, statusQuoHrs: 3 };
+      var sqHrs = bm.statusQuoHrs;
+      var sqTotal = reqVol * sqHrs;
+      var gHrs = reqVol * (gradialMinutes / 60);
+      var saved = sqTotal - gHrs;
+      totalRequests += reqVol;
+      totalStatusQuoHrs += sqTotal;
+      totalGradialHrs += gHrs;
+      businessRows.push({ label: bm.label, vol: reqVol, sqHrs: sqHrs, sqTotal: sqTotal, gHrs: gHrs, saved: saved });
+    }
+  });
+
+  if (businessRows.length > 0) {
+    var annualHrsSaved = Math.round(totalStatusQuoHrs - totalGradialHrs);
+    var annualDollarsSaved = Math.round(totalStatusQuoHrs * consultRate);
+    var threeYrHrsSaved = annualHrsSaved * 3;
+    var threeYrDollarsSaved = annualDollarsSaved * 3;
+    var efficiencyPct = totalStatusQuoHrs > 0 ? Math.round((1 - totalGradialHrs / totalStatusQuoHrs) * 100) : 0;
+    var outputMultiplier = totalGradialHrs > 0 ? Math.round(totalStatusQuoHrs / totalGradialHrs) : 0;
+
+    h += '<h2 style="font-size:1.2rem;color:#1a1a2e;margin-bottom:16px;border-bottom:2px solid #059669;padding-bottom:8px;">3. Business Value</h2>';
+    h += '<p style="font-size:0.88rem;color:#1a1a2e;line-height:1.8;margin-bottom:20px;">Today, producing content artifacts manually requires significant time from agencies, freelancers, or internal teams at a billable rate of <strong>$100/hr</strong>. The table below reflects the typical hours required per artifact type under the status quo. Gradial completes these same tasks in an average of <strong>5\u201310 minutes</strong>, including QA and governance checks.</p>';
+
+    // Status quo comparison table
+    h += '<table style="width:100%;font-size:0.84rem;border-collapse:collapse;margin-bottom:20px;">';
+    h += '<thead><tr style="background:#f8f9fa;"><th style="text-align:left;padding:8px 12px;font-size:0.75rem;text-transform:uppercase;color:#1a1a2e;">Artifact Type</th><th style="text-align:right;padding:8px 12px;font-size:0.75rem;text-transform:uppercase;color:#1a1a2e;">Status Quo (hrs)</th><th style="text-align:right;padding:8px 12px;font-size:0.75rem;text-transform:uppercase;color:#1a1a2e;">Gradial (min)</th><th style="text-align:right;padding:8px 12px;font-size:0.75rem;text-transform:uppercase;color:#1a1a2e;">Quoted Volume</th><th style="text-align:right;padding:8px 12px;font-size:0.75rem;text-transform:uppercase;color:#1a1a2e;">Hours Saved</th></tr></thead><tbody>';
+    businessRows.forEach(function(row) {
+      h += '<tr>';
+      h += '<td style="padding:6px 12px;">' + row.label + '</td>';
+      h += '<td style="text-align:right;padding:6px 12px;">' + row.sqHrs + ' hrs</td>';
+      h += '<td style="text-align:right;padding:6px 12px;">~10 min</td>';
+      h += '<td style="text-align:right;padding:6px 12px;">' + row.vol.toLocaleString() + '</td>';
+      h += '<td style="text-align:right;padding:6px 12px;font-weight:600;color:#059669;">' + Math.round(row.saved).toLocaleString() + ' hrs</td>';
+      h += '</tr>';
+    });
+    h += '<tr style="border-top:2px solid #059669;font-weight:700;"><td style="padding:8px 12px;">Total</td><td colspan="3"></td><td style="text-align:right;padding:8px 12px;color:#059669;">' + annualHrsSaved.toLocaleString() + ' hrs</td></tr>';
+    h += '</tbody></table>';
+
+    h += '<p style="font-size:0.88rem;color:#1a1a2e;line-height:1.8;margin-bottom:24px;">Based on ' + clientName + '\'s projected annual volume of <strong>' + totalRequests.toLocaleString() + ' artifacts</strong>, the estimated savings are:</p>';
+
+    // Summary cards: 12-month, 3-year, efficiency
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;">';
+    // 12-month card
+    h += '<div style="border:2px solid #059669;border-radius:10px;padding:24px;background:linear-gradient(180deg,#e6faf5 0%,#fff 40%);text-align:center;">';
+    h += '<div style="font-size:0.72rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:12px;">12-Month Savings</div>';
+    h += '<div style="font-size:2rem;font-weight:800;color:#059669;margin-bottom:4px;">' + annualHrsSaved.toLocaleString() + ' hours</div>';
+    h += '<div style="font-size:1.4rem;font-weight:700;color:#2d3436;margin-bottom:8px;">' + fmt(annualDollarsSaved) + ' saved</div>';
+    h += '<div style="font-size:0.78rem;color:#1a1a2e;">vs. status quo at $100/hr</div>';
+    h += '</div>';
+    // 3-year card
+    h += '<div style="border:2px solid #7c3aed;border-radius:10px;padding:24px;background:linear-gradient(180deg,#f3f0ff 0%,#fff 40%);text-align:center;">';
+    h += '<div style="font-size:0.72rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:12px;">3-Year Savings</div>';
+    h += '<div style="font-size:2rem;font-weight:800;color:#7c3aed;margin-bottom:4px;">' + threeYrHrsSaved.toLocaleString() + ' hours</div>';
+    h += '<div style="font-size:1.4rem;font-weight:700;color:#2d3436;margin-bottom:8px;">' + fmt(threeYrDollarsSaved) + ' saved</div>';
+    h += '<div style="font-size:0.78rem;color:#1a1a2e;">vs. status quo at $100/hr</div>';
+    h += '</div>';
+    // Efficiency gained card
+    h += '<div style="border:2px solid #e17055;border-radius:10px;padding:24px;background:linear-gradient(180deg,#fff5f3 0%,#fff 40%);text-align:center;">';
+    h += '<div style="font-size:0.72rem;text-transform:uppercase;color:#1a1a2e;letter-spacing:1px;margin-bottom:12px;">Efficiency Gained</div>';
+    h += '<div style="font-size:2rem;font-weight:800;color:#e17055;margin-bottom:4px;">' + efficiencyPct + '%</div>';
+    h += '<div style="font-size:0.88rem;font-weight:600;color:#2d3436;margin-bottom:8px;">faster per artifact</div>';
+    h += '<div style="font-size:0.82rem;color:#1a1a2e;line-height:1.5;margin-top:8px;text-align:center;">That\u2019s <strong style="color:#e17055;">' + outputMultiplier + 'x</strong> more output with the same team \u2014 or the same output with a fraction of the effort.</div>';
+    h += '</div>';
+    h += '</div>';
+
+    h += '<p style="font-size:0.82rem;color:#1a1a2e;font-style:italic;line-height:1.7;margin-bottom:24px;">* Estimates based on industry-standard production times per artifact type at $100/hr billable rate, compared to Gradial\'s average completion time of ~10 minutes per artifact. Actual savings may vary based on complexity and scope.</p>';
+  }
+
+  // Helper to force all inline colors to black in injected tab content
+  function forceBlack(html) {
+    // Replace all inline color properties with black
+    var out = html.replace(/color\s*:\s*#[0-9a-fA-F]{3,6}/gi, 'color:#1a1a2e');
+    // Replace colored borders with black
+    out = out.replace(/border-top\s*:\s*\d+px\s+solid\s+#[0-9a-fA-F]{3,6}/gi, 'border-top:4px solid #1a1a2e');
+    out = out.replace(/border-left\s*:\s*\d+px\s+solid\s+#[0-9a-fA-F]{3,6}/gi, 'border-left:4px solid #1a1a2e');
+    out = out.replace(/border-right\s*:\s*\d+px\s+solid\s+#[0-9a-fA-F]{3,6}/gi, 'border-right:4px solid #1a1a2e');
+    out = out.replace(/border-bottom\s*:\s*\d+px\s+solid\s+#[0-9a-fA-F]{3,6}/gi, 'border-bottom:4px solid #1a1a2e');
+    // Replace gradient borders
+    out = out.replace(/border-image\s*:\s*linear-gradient\([^)]+\)\s*1/gi, 'border-image:none');
+    return out;
+  }
+
+  // ---- TERM DEFINITIONS (from tab-definitions) ----
+  var defTab = document.getElementById('tab-definitions');
+  if (defTab) {
+    h += '<div style="border-top:3px solid #1a1a2e;margin-top:32px;padding-top:24px;color:#1a1a2e;">';
+    h += '<h2 style="font-size:1.3rem;font-weight:800;color:#1a1a2e;margin-bottom:16px;">Term Definitions</h2>';
+    var defHtml = forceBlack(defTab.innerHTML);
+    h += '<div style="color:#1a1a2e;">' + defHtml + '</div>';
+    h += '</div>';
+  }
+
+  // ---- USE CASES (from tab-usecases) ----
+  var ucTab = document.getElementById('tab-usecases');
+  if (ucTab) {
+    h += '<div style="border-top:3px solid #1a1a2e;margin-top:32px;padding-top:24px;color:#1a1a2e;">';
+    h += '<h2 style="font-size:1.3rem;font-weight:800;color:#1a1a2e;margin-bottom:16px;">Use Cases</h2>';
+    var ucHtml = forceBlack(ucTab.innerHTML);
+    // Remove the tab's own H2 to avoid duplication
+    ucHtml = ucHtml.replace(/<h2[^>]*>[\s\S]*?<\/h2>/i, '');
+    h += '<div style="color:#1a1a2e;">' + ucHtml + '</div>';
+    h += '</div>';
+  }
+
+  // ---- FOOTER ----
+  h += '<div style="border-top:2px solid #1a1a2e;padding:24px 0 8px;text-align:center;font-size:0.8rem;color:#1a1a2e;">';
+  h += '<p style="margin-bottom:4px;">This proposal is confidential and intended solely for ' + clientName + '.</p>';
+  h += '<p style="margin:0;">Pricing valid through ' + fmtDate(validUntil) + '. Subject to final contract terms.</p>';
+  h += '</div>';
+
+  h += '</div>'; // close padding div
+  h += '</div>'; // close proposal-printable
+
+  var proposalOut = document.getElementById('proposal-output');
+  proposalOut.innerHTML = h;
+
+  document.getElementById('btn-print-proposal').style.display = '';
+  document.getElementById('btn-reset-proposal').style.display = '';
+}
+
+function resetProposal() {
+  document.getElementById('proposal-output').innerHTML = '';
+  document.getElementById('prop-client').value = '';
+  document.getElementById('prop-preparedby').value = '';
+  const today = new Date();
+  const dd = s => String(s).padStart(2,'0');
+  document.getElementById('prop-date').value = today.getFullYear() + '-' + dd(today.getMonth()+1) + '-' + dd(today.getDate());
+  const valid = new Date(today); valid.setDate(valid.getDate() + 30);
+  document.getElementById('prop-valid').value = valid.getFullYear() + '-' + dd(valid.getMonth()+1) + '-' + dd(valid.getDate());
+  document.getElementById('btn-print-proposal').style.display = 'none';
+  document.getElementById('btn-reset-proposal').style.display = 'none';
+}
+
+function downloadProposalHTML() {
+  const content = document.getElementById('proposal-printable');
+  if (!content) return;
+  const clientName = (document.getElementById('prop-client').value.trim() || 'Client').replace(/[^a-zA-Z0-9_-]/g, '_');
+  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Gradial Proposal — ' + clientName + '</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;padding:40px;color:#2d3436;line-height:1.6;background:#f4f2f9;} table{width:100%;border-collapse:collapse;} th,td{padding:8px 10px;} @media print{body{padding:0;background:#fff;} @page{margin:0.5in;}}</style></head><body>' + content.outerHTML + '</body></html>';
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Gradial_Proposal_' + clientName + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ==================== PRE-CALL RESEARCH ====================
+
+const INDUSTRY_PILLARS = {
+  "Technology": {
+    emoji: "\uD83D\uDCBB",
+    color: "#2563eb",
+    pillars: [
+      {
+        title: "Product & Release Cadence",
+        icon: "\uD83D\uDE80",
+        pain: "Continuous product launches, feature updates, and version releases demand a constant stream of web pages, email campaigns, digital ads, and documentation updates. Engineering ships weekly but marketing can\u2019t keep up \u2014 creating a growing backlog of unannounced features and stale product pages.",
+        gradialSolution: "Gradial\u2019s automated content supply chain produces launch-ready marketing artifacts (landing pages, email sequences, ad creatives, product docs) directly from product release data. When engineering ships, marketing artifacts are already queued \u2014 eliminating the weeks-long gap between GA and go-to-market."
+      },
+      {
+        title: "Tentpole Events & Campaigns",
+        icon: "\uD83C\uDFAA",
+        pain: "Major events like re:Invent, Dreamforce, Google Next, and .conf require hundreds of unique assets \u2014 pre-event emails, booth collateral, session landing pages, social ads, post-event nurture sequences \u2014 all on immovable deadlines. Teams scramble with agencies and freelancers, often missing the window.",
+        gradialSolution: "Gradial\u2019s campaign production engine handles the surge: from event-specific landing pages and targeted email sequences to social/digital ad variants across every placement. One brief produces a full event content kit \u2014 customized by audience segment, track, and follow-up cadence \u2014 weeks before the event, not days."
+      },
+      {
+        title: "Ecosystem & Partner Co-Marketing",
+        icon: "\uD83E\uDD1D",
+        pain: "Technology companies manage vast partner ecosystems (ISVs, resellers, integrators) where each partner needs co-branded content \u2014 solution briefs, joint landing pages, integration guides, co-sell email campaigns. With hundreds of partners, it\u2019s impossible to produce tailored content for each relationship manually.",
+        gradialSolution: "Gradial\u2019s templatized content engine auto-generates co-branded artifacts at scale: co-marketing landing pages, joint solution briefs, partner-specific email campaigns, and integration showcase pages \u2014 each customized per partner\u2019s brand guidelines, use cases, and target segments. 100 partners, 100 unique content kits, one workflow."
+      }
+    ]
+  },
+  "Telecommunications": {
+    emoji: "\uD83D\uDCE1",
+    color: "#7c3aed",
+    pillars: [
+      {
+        title: "Plan & Offer Proliferation",
+        icon: "\uD83D\uDCF1",
+        pain: "Telecom companies run dozens of concurrent rate plans, device bundles, promotional offers, and regional pricing variations. Every change requires updated web pages, email campaigns, digital ads, and compliance-reviewed fine print across consumer, SMB, and enterprise segments.",
+        gradialSolution: "Gradial automates the cascade: when a pricing or plan change is made, all downstream content \u2014 landing pages, comparison tables, promotional emails, digital ads with correct legal disclaimers \u2014 updates programmatically across every segment and region."
+      },
+      {
+        title: "Network & Infrastructure Storytelling",
+        icon: "\uD83D\uDDFC",
+        pain: "5G rollouts, fiber expansion, network upgrades, and coverage milestones are constant \u2014 but translating technical infrastructure investments into compelling consumer and enterprise marketing content is a persistent bottleneck.",
+        gradialSolution: "Gradial transforms network data into marketing narratives: coverage expansion landing pages, \u2018now available in your area\u2019 email triggers, speed comparison ad creatives, and enterprise connectivity solution pages \u2014 all generated from network rollout data."
+      },
+      {
+        title: "Regulatory Compliance at Content Scale",
+        icon: "\u2696\uFE0F",
+        pain: "Every piece of telecom marketing content must comply with FCC regulations, state PUC rules, accessibility requirements, and truth-in-advertising standards. Legal review of high-volume content production creates massive bottlenecks.",
+        gradialSolution: "Gradial embeds compliance guardrails directly into the content production pipeline: approved legal language, required disclosures, accessibility standards, and regulatory footnotes are automatically applied to every artifact."
+      }
+    ]
+  },
+  "Financial Services": {
+    emoji: "\uD83C\uDFE6",
+    color: "#059669",
+    pillars: [
+      {
+        title: "Product & Rate-Driven Content Velocity",
+        icon: "\uD83D\uDCCA",
+        pain: "Rate changes, new fund launches, credit card offers, mortgage products, and insurance plans create constant content demands. Each product update requires landing pages, email campaigns, comparison tools, and digital ads \u2014 all with precise regulatory language.",
+        gradialSolution: "Gradial\u2019s data-driven content engine automatically generates product marketing artifacts when rates or products change: updated landing pages with current APYs, email campaigns with compliant rate disclosures, comparison ad creatives, and product detail pages."
+      },
+      {
+        title: "Personalization & Lifecycle Journeys",
+        icon: "\uD83C\uDFAF",
+        pain: "Financial services companies need hyper-personalized content across every lifecycle stage: acquisition, onboarding, cross-sell, retention, and win-back. Each segment requires different messaging, offers, and compliance treatments \u2014 creating an exponential content matrix.",
+        gradialSolution: "Gradial produces segment-specific content at scale: personalized onboarding email sequences, cross-sell landing pages based on product holdings, retention campaign creatives, and lifecycle-triggered content \u2014 all dynamically assembled from approved content components."
+      },
+      {
+        title: "Compliance-First Content Production",
+        icon: "\uD83D\uDEE1\uFE0F",
+        pain: "Every marketing artifact in financial services passes through compliance review \u2014 FINRA, SEC, OCC, state regulators, and internal legal. This review cycle adds 2-6 weeks to every piece of content, making real-time marketing nearly impossible.",
+        gradialSolution: "Gradial\u2019s compliance-embedded production means artifacts are born compliant: pre-approved disclosures, required regulatory language, fair lending statements, and UDAAP-safe messaging are built into every template. Compliance reviews the template library quarterly \u2014 not individual assets."
+      }
+    ]
+  },
+  "Retail & Commerce": {
+    emoji: "\uD83D\uDECD\uFE0F",
+    color: "#dc2626",
+    pillars: [
+      {
+        title: "Seasonal & Promotional Campaign Volume",
+        icon: "\uD83C\uDF81",
+        pain: "Retail operates on an unrelenting promotional calendar: Black Friday, Cyber Monday, holiday sales, back-to-school, seasonal transitions, flash sales, and clearance events. Each requires a full content production cycle \u2014 email blasts, homepage takeovers, category page updates, social ads, and paid search creatives.",
+        gradialSolution: "Gradial\u2019s campaign production engine handles the retail content deluge: promotional landing pages, email campaign variants by segment, social ad creatives across every platform and format, category page updates, and homepage merchandising \u2014 all produced from a single campaign brief."
+      },
+      {
+        title: "Catalog & Product Content at Scale",
+        icon: "\uD83D\uDCE6",
+        pain: "Large retailers manage thousands to millions of SKUs, each needing product descriptions, lifestyle imagery, category page placements, cross-sell recommendations, and SEO-optimized content. New product onboarding, seasonal rotations, and vendor content updates create a never-ending content production cycle.",
+        gradialSolution: "Gradial automates product content production: SEO-optimized product descriptions, category page layouts, cross-sell content modules, and product launch email campaigns \u2014 all generated from PIM/product data feeds. New SKU onboarding that took 2 weeks now happens in hours."
+      },
+      {
+        title: "Omnichannel Content Consistency",
+        icon: "\uD83D\uDD04",
+        pain: "Today\u2019s retailers must maintain consistent messaging across web, mobile app, email, social, in-store digital, marketplace listings (Amazon, Walmart), and emerging channels. Each channel has different format requirements, character limits, and creative specs.",
+        gradialSolution: "Gradial\u2019s multi-format content engine takes a single campaign concept and produces channel-optimized variants: responsive web pages, mobile-first email templates, social ad creatives sized for every placement, marketplace listing content, and in-store digital signage."
+      }
+    ]
+  },
+  "Healthcare": {
+    emoji: "\uD83C\uDFE5",
+    color: "#0891b2",
+    pillars: [
+      {
+        title: "Provider & Patient Content Ecosystem",
+        icon: "\uD83D\uDC68\u200D\u2695\uFE0F",
+        pain: "Healthcare organizations serve dual audiences \u2014 providers (B2B) and patients/members (B2C) \u2014 each requiring fundamentally different content: clinical evidence for providers, accessible health information for patients, and enrollment/benefits content for members.",
+        gradialSolution: "Gradial produces audience-specific content from shared medical/product data: clinical summaries for HCPs, plain-language patient education pages, member enrollment content, and caregiver resources \u2014 all from a single source of truth, each automatically tailored to the right audience and compliance standard."
+      },
+      {
+        title: "Regulatory & MLR Review Bottleneck",
+        icon: "\uD83D\uDCCB",
+        pain: "Medical-Legal-Regulatory (MLR) review is the single biggest bottleneck in healthcare marketing. Every claim, every image, every footnote must be reviewed against FDA regulations, state requirements, and internal medical accuracy standards. A single email campaign can take 8-12 weeks through MLR.",
+        gradialSolution: "Gradial embeds MLR-approved language, required safety information, fair balance statements, and approved claims directly into content templates. The production system uses pre-reviewed content modules that snap together \u2014 MLR reviews the module library periodically, not every individual asset."
+      },
+      {
+        title: "Multi-Brand & Therapeutic Area Scale",
+        icon: "\uD83D\uDC8A",
+        pain: "Large pharma and health systems manage multiple brands, therapeutic areas, or service lines \u2014 each with distinct positioning, approved messaging, visual identity, and regulatory requirements. A pharma company with 20 brands needs 20x the content volume, each completely siloed from a compliance perspective.",
+        gradialSolution: "Gradial manages multi-brand content production with brand-specific template libraries, approved messaging frameworks, and therapeutic area guardrails. Each brand operates in its own compliance sandbox while sharing production infrastructure."
+      }
+    ]
+  },
+  "Media & Entertainment": {
+    emoji: "\uD83C\uDFAC",
+    color: "#ea580c",
+    pillars: [
+      {
+        title: "Title & Release Marketing Velocity",
+        icon: "\uD83C\uDFA5",
+        pain: "Streaming platforms and studios release hundreds of titles annually \u2014 each requiring teaser campaigns, launch content, social media kits, email announcements, digital ad creatives, and ongoing engagement content. The release calendar is relentless.",
+        gradialSolution: "Gradial\u2019s content production engine creates complete title marketing kits: teaser email campaigns, launch landing pages, social ad creatives across every platform, genre-targeted promotional variants, and post-launch engagement content \u2014 all generated from title metadata and key art."
+      },
+      {
+        title: "Audience Segmentation & Personalization",
+        icon: "\uD83D\uDC65",
+        pain: "Media companies must market to wildly diverse audience segments \u2014 by genre preference, viewing history, demographic, geography, and platform. A single title might need completely different marketing approaches for action fans vs. drama lovers, new subscribers vs. long-time members.",
+        gradialSolution: "Gradial produces segment-specific marketing variants at scale: genre-targeted email campaigns, demographic-specific ad creatives, platform-optimized content, and behavioral-triggered engagement content \u2014 all automatically varied from the same source brief."
+      },
+      {
+        title: "Franchise & IP Content Ecosystems",
+        icon: "\u2B50",
+        pain: "Major franchises and IP require vast content ecosystems: merchandise landing pages, event promotions, fan engagement campaigns, licensing partner content, and cross-platform storytelling \u2014 all while maintaining strict brand/IP guidelines.",
+        gradialSolution: "Gradial manages franchise content within IP-specific guardrails: approved character usage, brand guidelines, licensing restrictions, and canon compliance are embedded in the template system. Merchandise pages, event promos, and partner co-marketing content are all produced at scale while enforcing IP integrity."
+      }
+    ]
+  },
+  "Industrials & Manufacturing": {
+    emoji: "\uD83C\uDFED",
+    color: "#4f46e5",
+    pillars: [
+      {
+        title: "Product Catalog & Technical Content Scale",
+        icon: "\uD83D\uDCD0",
+        pain: "Industrial companies manage massive product catalogs \u2014 thousands of SKUs with detailed technical specifications, application guides, CAD drawings, safety data sheets, and configuration options. Each product needs web content, digital catalog entries, distributor-facing materials, and search-optimized descriptions.",
+        gradialSolution: "Gradial automates technical content production from product data: spec-sheet landing pages, application guide content, product comparison tools, distributor portal content, and SEO-optimized product descriptions \u2014 all generated from PIM/ERP data. 10,000 SKUs, always current."
+      },
+      {
+        title: "Channel & Distributor Enablement",
+        icon: "\uD83D\uDD27",
+        pain: "Manufacturers sell through complex channel networks \u2014 distributors, dealers, reps, OEM partners \u2014 each needing customized marketing content: co-branded collateral, local market landing pages, product training materials, promotional campaign kits, and lead generation content.",
+        gradialSolution: "Gradial produces channel-ready content at scale: co-branded landing pages per distributor, localized campaign kits by region, product training content by partner tier, and promotional email templates with partner-specific customization."
+      },
+      {
+        title: "Industry Vertical & Application Marketing",
+        icon: "\uD83C\uDFD7\uFE0F",
+        pain: "Industrial products serve multiple end-use verticals (automotive, aerospace, energy, construction, food & beverage) \u2014 each requiring industry-specific messaging, application examples, compliance certifications, and value propositions.",
+        gradialSolution: "Gradial\u2019s vertical content engine produces industry-specific marketing from shared product data: vertical-targeted landing pages, application-specific case study formats, industry compliance content, and segment-tailored email campaigns."
+      }
+    ]
+  }
+};
+
+function runPreCallResearch() {
+  var company = document.getElementById('precall-company').value.trim();
+  var industry = document.getElementById('precall-industry').value;
+
+  if (!company) { alert('Please enter a company name.'); return; }
+  if (!industry) { alert('Please select an industry.'); return; }
+
+  var data = INDUSTRY_PILLARS[industry];
+  if (!data) { alert('Industry data not found.'); return; }
+
+  var btn = document.getElementById('btn-precall-research');
+  btn.innerHTML = 'Researching...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  var html = '';
+
+  // Company header
+  html += '<div class="card" style="background:linear-gradient(135deg,' + data.color + '15 0%,#fff 60%);border-left:4px solid ' + data.color + ';margin-bottom:24px;">';
+  html += '<div style="display:flex;align-items:center;gap:12px;">';
+  html += '<span style="font-size:2rem;">' + data.emoji + '</span>';
+  html += '<div>';
+  html += '<h2 style="font-size:1.4rem;margin-bottom:2px;">' + company + '</h2>';
+  html += '<span style="display:inline-block;background:' + data.color + ';color:#fff;padding:3px 12px;border-radius:20px;font-size:0.78rem;font-weight:600;">' + industry + '</span>';
+  html += '</div></div></div>';
+
+  // Three pillar cards
+  data.pillars.forEach(function(p, i) {
+    html += '<div class="card" style="margin-bottom:20px;border-top:3px solid ' + data.color + ';">';
+    html += '<h3 style="color:' + data.color + ';font-size:1.05rem;margin-bottom:12px;">' + p.icon + ' Pillar ' + (i+1) + ': ' + p.title + '</h3>';
+    html += '<div style="margin-bottom:16px;">';
+    html += '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:6px;letter-spacing:0.5px;">Industry Pain Point</div>';
+    html += '<p style="font-size:0.88rem;color:#444;line-height:1.6;">' + p.pain + '</p>';
+    html += '</div>';
+    html += '<div style="background:' + data.color + '08;border-radius:8px;padding:14px;border-left:3px solid ' + data.color + ';">';
+    html += '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:' + data.color + ';margin-bottom:6px;letter-spacing:0.5px;">Gradial Solution</div>';
+    html += '<p style="font-size:0.88rem;color:#444;line-height:1.6;">' + p.gradialSolution + '</p>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  // Web search results placeholder
+  html += '<div class="card" style="margin-bottom:20px;border-top:3px solid #f59e0b;">';
+  html += '<h3 style="color:#f59e0b;margin-bottom:8px;">Live Company Intelligence</h3>';
+  html += '<p style="font-size:0.82rem;color:#888;margin-bottom:12px;">Searching the web for recent ' + company + ' news, marketing initiatives, and content strategy insights...</p>';
+  html += '<div id="precall-web-results" style="min-height:60px;"><div style="text-align:center;padding:20px;color:#999;font-size:0.85rem;">Loading web research...</div></div>';
+  html += '</div>';
+
+  // Discovery questions
+  html += '<div class="card" style="margin-bottom:20px;border-top:3px solid #10b981;">';
+  html += '<h3 style="color:#10b981;margin-bottom:12px;">Suggested Discovery Questions</h3>';
+  html += '<div style="display:grid;gap:10px;">';
+  data.pillars.forEach(function(p, i) {
+    html += '<div style="display:flex;gap:8px;align-items:flex-start;">';
+    html += '<span style="background:#10b981;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;margin-top:2px;">' + (i+1) + '</span>';
+    html += '<p style="font-size:0.88rem;color:#444;margin:0;">"How does ' + company + ' currently handle <strong>' + p.title.toLowerCase() + '</strong>? What\'s your current production workflow and where are the biggest bottlenecks?"</p>';
+    html += '</div>';
+  });
+  html += '<div style="display:flex;gap:8px;align-items:flex-start;">';
+  html += '<span style="background:#10b981;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;margin-top:2px;">4</span>';
+  html += '<p style="font-size:0.88rem;color:#444;margin:0;">"What\'s ' + company + '\'s biggest content production challenge heading into the next quarter?"</p>';
+  html += '</div>';
+  html += '</div></div>';
+
+  document.getElementById('precall-results').innerHTML = html;
+  document.getElementById('btn-precall-copy').style.display = 'inline-block';
+  document.getElementById('btn-precall-reset').style.display = 'inline-block';
+
+  // Run web search
+  fetchCompanyIntelligence(company, industry);
+}
+
+var lastInsights = []; // store for copy function
+
+function fetchCompanyIntelligence(company, industry) {
+  var resultsDiv = document.getElementById('precall-web-results');
+  var btn = document.getElementById('btn-precall-research');
+  lastInsights = [];
+
+  fetch('/api/research?company=' + encodeURIComponent(company) + '&industry=' + encodeURIComponent(industry))
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('API returned ' + resp.status);
+      return resp.json();
+    })
+    .then(function(data) {
+      if (data.results && data.results.length > 0) {
+        var h = '';
+
+        // AI-Generated Strategic Insights (shown first, prominently)
+        if (data.insights && data.insights.length > 0) {
+          lastInsights = data.insights;
+          h += '<div style="margin-bottom:20px;">';
+          h += '<div style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#7c3aed;margin-bottom:12px;">Strategic Insights — How Gradial Can Help</div>';
+          if (data.summary) {
+            h += '<div style="padding:14px;background:linear-gradient(135deg,#f5f3ff,#fdf2f8);border-radius:10px;margin-bottom:14px;border:1px solid #ede9fe;">';
+            h += '<p style="font-size:0.9rem;color:#444;line-height:1.6;margin:0;"><strong style="color:#7c3aed;">Executive Summary:</strong> ' + data.summary + '</p>';
+            h += '</div>';
+          }
+          h += '<div style="display:grid;gap:10px;">';
+          data.insights.forEach(function(insight, idx) {
+            h += '<div style="padding:14px 16px;background:#fff;border-radius:10px;border:1px solid #ede9fe;box-shadow:0 1px 4px rgba(124,58,237,0.06);">';
+            h += '<div style="display:flex;align-items:flex-start;gap:10px;">';
+            h += '<div style="font-size:1.3rem;flex-shrink:0;margin-top:1px;">' + (insight.icon || '\u2728') + '</div>';
+            h += '<div style="flex:1;">';
+            h += '<div style="font-weight:700;color:#1a1a2e;font-size:0.9rem;margin-bottom:4px;">' + (idx + 1) + '. ' + insight.title + '</div>';
+            h += '<p style="font-size:0.84rem;color:#555;line-height:1.6;margin:0 0 6px;">' + insight.body + '</p>';
+            h += '<span style="display:inline-block;font-size:0.72rem;font-weight:600;color:#7c3aed;background:#f5f3ff;padding:2px 8px;border-radius:4px;">' + insight.useCase + '</span>';
+            h += '</div></div></div>';
+          });
+          h += '</div></div>';
+        } else if (data.summary) {
+          // Fallback: basic summary if no AI insights
+          h += '<div style="margin-bottom:16px;padding:14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #10b981;">';
+          h += '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:#10b981;margin-bottom:6px;">Company Brief</div>';
+          h += '<p style="font-size:0.88rem;color:#444;line-height:1.6;">' + data.summary + '</p>';
+          h += '</div>';
+        }
+
+        // Web search results (shown below insights)
+        h += '<div style="margin-top:8px;">';
+        h += '<details style="cursor:pointer;">';
+        h += '<summary style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;margin-bottom:10px;list-style:none;display:flex;align-items:center;gap:6px;"><span style="transition:transform 0.2s;display:inline-block;">&#9654;</span> Web Sources (' + data.results.length + ' results)</summary>';
+        h += '<div style="display:grid;gap:8px;margin-top:8px;">';
+        data.results.forEach(function(r) {
+          h += '<div style="padding:10px 12px;background:#fffbeb;border-radius:8px;border-left:3px solid #f59e0b;">';
+          h += '<a href="' + r.url + '" target="_blank" style="font-weight:600;color:#1a1a2e;font-size:0.85rem;text-decoration:none;">' + r.title + '</a>';
+          if (r.snippet) h += '<p style="font-size:0.78rem;color:#666;margin-top:3px;line-height:1.5;">' + r.snippet + '</p>';
+          if (r.source) h += '<span style="font-size:0.7rem;color:#999;margin-top:3px;display:block;">' + r.source + '</span>';
+          h += '</div>';
+        });
+        h += '</div></details></div>';
+
+        resultsDiv.innerHTML = h;
+      } else {
+        resultsDiv.innerHTML = '<div style="padding:12px;background:#fff7ed;border-radius:8px;color:#92400e;font-size:0.85rem;">No specific web results found. The industry pillar analysis above is still fully applicable.</div>';
+      }
+    })
+    .catch(function(err) {
+      resultsDiv.innerHTML = '<div style="padding:12px;background:#fff7ed;border-radius:8px;color:#92400e;font-size:0.85rem;"><strong>Web search unavailable</strong> \u2014 The live research API is not configured yet. The industry pillar analysis above is still fully applicable.<br><span style="font-size:0.78rem;color:#999;">To enable: add a SERPER_API_KEY in Vercel environment settings (free at serper.dev).</span></div>';
+    })
+    .finally(function() {
+      btn.innerHTML = 'Research Company';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+}
+
+function copyPreCallBriefing() {
+  var company = document.getElementById('precall-company').value.trim();
+  var industry = document.getElementById('precall-industry').value;
+  var data = INDUSTRY_PILLARS[industry];
+  if (!data) return;
+
+  var text = 'PRE-CALL RESEARCH BRIEFING\n';
+  text += '==================================================\n';
+  text += 'Company: ' + company + '\n';
+  text += 'Industry: ' + industry + '\n';
+  text += 'Prepared: ' + new Date().toLocaleDateString() + '\n\n';
+
+  // Include AI insights if available
+  if (lastInsights.length > 0) {
+    text += 'STRATEGIC INSIGHTS — HOW GRADIAL CAN HELP\n';
+    text += '==================================================\n\n';
+    lastInsights.forEach(function(insight, i) {
+      text += (i+1) + '. ' + insight.title.toUpperCase() + '\n';
+      text += insight.body + '\n';
+      text += 'Use Case: ' + insight.useCase + '\n\n';
+    });
+  }
+
+  text += 'INDUSTRY PAIN POINTS & SOLUTIONS\n';
+  text += '==================================================\n\n';
+
+  data.pillars.forEach(function(p, i) {
+    text += 'PILLAR ' + (i+1) + ': ' + p.title.toUpperCase() + '\n';
+    text += '----------------------------------------\n';
+    text += 'Pain Point:\n' + p.pain + '\n\n';
+    text += 'Gradial Solution:\n' + p.gradialSolution + '\n\n';
+  });
+
+  text += 'DISCOVERY QUESTIONS\n';
+  text += '----------------------------------------\n';
+  data.pillars.forEach(function(p, i) {
+    text += (i+1) + '. "How does ' + company + ' currently handle ' + p.title.toLowerCase() + '?"\n\n';
+  });
+  text += '4. "What\'s ' + company + '\'s biggest content production challenge heading into the next quarter?"\n';
+
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('btn-precall-copy');
+    btn.innerHTML = 'Copied!';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    btn.style.border = '2px solid #10b981';
+    setTimeout(function() { btn.innerHTML = 'Copy as Briefing'; btn.style.background = '#fff'; btn.style.color = '#6c5ce7'; btn.style.border = '2px solid #7c3aed'; }, 2000);
+  });
+}
+
+function resetPreCall() {
+  document.getElementById('precall-company').value = '';
+  document.getElementById('precall-industry').value = '';
+  document.getElementById('precall-results').innerHTML = '';
+  document.getElementById('btn-precall-copy').style.display = 'none';
+  document.getElementById('btn-precall-reset').style.display = 'none';
+}
+
+</script>
+</body>
+</html>
